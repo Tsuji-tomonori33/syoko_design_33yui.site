@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>獅子島スタンプラリー</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="index-page">
+  <h1>🐾 獅子島スタンプラリー 🐾</h1>
+  <p>QRコードを読み取ってスタンプを集めよう！</p>
+
+  <div class="stamp-board">
+    <!-- 固定版：ドラッグ版で決めた位置を%で反映 -->
+    <div class="stamp-slot" id="slot1" style="left:10%; top:15%;"><img id="stamp1" src="images/stamps/stamp1.png" alt="スタンプ1"></div>
+    <div class="stamp-slot" id="slot2" style="left:35%; top:15%;"><img id="stamp2" src="images/stamps/stamp2.png" alt="スタンプ2"></div>
+    <div class="stamp-slot" id="slot3" style="left:60%; top:15%;"><img id="stamp3" src="images/stamps/stamp3.png" alt="スタンプ3"></div>
+    <div class="stamp-slot" id="slot4" style="left:22%; top:40%;"><img id="stamp4" src="images/stamps/stamp4.png" alt="スタンプ4"></div>
+    <div class="stamp-slot" id="slot5" style="left:48%; top:40%;"><img id="stamp5" src="images/stamps/stamp5.png" alt="スタンプ5"></div>
+  </div>
+
+  <p id="complete-message" style="display:none; color:green; font-weight:bold;">
+    🎉 全スタンプコンプリート！おめでとう！ 🎉
+  </p>
+
+  <script src="script.js"></script>
+</body>
+</html>

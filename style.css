@@ -3,31 +3,29 @@ body {
   text-align: center;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .index-page {
-  background: url("images/backgrounds/mimi.jpg") no-repeat center center fixed;
+  background: url("images/backgrounds/haikei.jpg") no-repeat center center;
   background-size: cover;
   color: white;
   min-height: 100vh;
 }
 
-/* スタンプ全体をまとめるエリア */
+/* スタンプボード */
 .stamp-board {
   position: relative;
   width: 100%;
-  height: 100vh; /* 背景全体を使う */
-  overflow: hidden;
+  height: 80vh;
 }
 
 /* スタンプ枠 */
 .stamp {
   position: absolute;
-  width: 15vw;              /* 画面幅に対して15% */
-  aspect-ratio: 1 / 1;      /* 正方形 */
-  max-width: 100px;         /* 最大サイズ制限 */
-  transition: transform 0.3s;
+  width: 15vw;
+  aspect-ratio: 1 / 1;
+  max-width: 100px;
 }
 
 .stamp img {
@@ -37,20 +35,66 @@ body {
   display: block;
 }
 
-/* スタンプが取得済みの見た目 */
-.got {
-  opacity: 0.8;
-  transform: scale(1.05);
+#reset {
+  position: relative;
+  margin: 20px auto;
+  display: block;
+  padding: 10px 15px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  z-index: 10;
+}
+
+#reset:hover {
+  background: #c0392b;
+}
+
+/* スポットページ */
+.spot-page {
+  background: #fffaf0;
+  text-align: center;
+  padding: 20px;
+}
+
+.spot-bg img {
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.stamp-button button {
+  font-size: 1.2em;
+  background: #ff9800;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.stamp-button button:disabled {
+  background: gray;
+  cursor: default;
+}
+
+.back-home a {
+  display: inline-block;
+  margin-top: 20px;
+  color: #007bff;
+  text-decoration: none;
 }
 
 /* スマホ対応 */
 @media (max-width: 600px) {
   .stamp {
-    width: 20vw; /* スマホは少し大きめに */
+    width: 20vw;
   }
-
   .index-page {
-    background: url("images/backgrounds/mimi.jpg") no-repeat center center;
     background-size: cover;
   }
 }

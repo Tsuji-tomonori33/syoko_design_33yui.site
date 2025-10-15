@@ -1,82 +1,12 @@
-body {
-  font-family: sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
-.index-page {
-  background: url("images/backgrounds/mimi.jpg") no-repeat center center;
-  background-size: cover;
-  color: white;
-  min-height: 100vh;
-  position: relative;
-}
-
-.stamp-board {
-  position: relative;
-  width: 100%;
-  height: 80vh;
-}
-
 .stamp {
   position: absolute;
-  width: 100px;
-  height: 100px;
+  width: 8vw;   /* 画面幅の8%（スマホでも自然） */
+  aspect-ratio: 1 / 1; /* 正方形を維持 */
+  max-width: 100px; /* どんなに広くても100px以下 */
 }
 
 .stamp img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-}
-
-#reset {
-  margin-top: 15px;
-  padding: 10px 15px;
-  background: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1em;
-}
-
-#reset:hover {
-  background: #c0392b;
-}
-
-.spot-page {
-  background: #fffaf0;
-  text-align: center;
-  padding: 20px;
-}
-
-.spot-bg img {
-  width: 90%;
-  max-width: 400px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.stamp-button button {
-  font-size: 1.2em;
-  background: #ff9800;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.stamp-button button:disabled {
-  background: gray;
-  cursor: default;
-}
-
-.back-home a {
-  display: inline-block;
-  margin-top: 20px;
-  color: #007bff;
-  text-decoration: none;
 }

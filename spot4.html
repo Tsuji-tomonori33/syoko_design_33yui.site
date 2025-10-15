@@ -4,19 +4,40 @@
   <meta charset="UTF-8">
   <title>スポット4 | 獅子島スタンプラリー</title>
   <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body class="spot-page">
-  <h2>スポット4：〇〇展望台</h2>
-  <p>ここは獅子島の絶景ポイントです。海と空が広がる美しい風景を楽しめます。</p>
 
-  <button onclick="getStamp(4)">スタンプを押す！</button>
-  <p><a href="index.html">← スタンプ帳に戻る</a></p>
+  <div class="spot-bg">
+    <h1>🐾 スポット4：獅子島神社 ⛩️</h1>
+    <img src="images/backgrounds/spot4.jpg" alt="スポット4写真">
+    <p>島の歴史ある神社。境内の静けさと自然が魅力で、訪れる人々を癒します。</p>
+  </div>
+
+  <div class="stamp-button">
+    <button id="get-stamp">🎯 スタンプを押す！</button>
+  </div>
+
+  <p id="message" style="display:none; color:green; font-weight:bold;">
+    ✅ スタンプ4を獲得しました！
+  </p>
+
+  <div class="back-home">
+    <a href="index.html">🏠 スタンプ帳へ戻る</a>
+  </div>
 
   <script>
-    function getStamp(num) {
-      localStorage.setItem(`stamp${num}`, "get");
-      alert(`スタンプ${num}を獲得しました！`);
+    const button = document.getElementById("get-stamp");
+    const message = document.getElementById("message");
+
+    button.addEventListener("click", () => {
+      localStorage.setItem("stamp4", "get");
+      message.style.display = "block";
+      button.disabled = true;
+    });
+
+    if (localStorage.getItem("stamp4") === "get") {
+      message.style.display = "block";
+      button.disabled = true;
     }
   </script>
 </body>

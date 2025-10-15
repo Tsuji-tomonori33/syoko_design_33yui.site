@@ -1,12 +1,56 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.index-page {
+  background: url("images/backgrounds/mimi.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  min-height: 100vh;
+}
+
+/* スタンプ全体をまとめるエリア */
+.stamp-board {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* 背景全体を使う */
+  overflow: hidden;
+}
+
+/* スタンプ枠 */
 .stamp {
   position: absolute;
-  width: 8vw;   /* 画面幅の8%（スマホでも自然） */
-  aspect-ratio: 1 / 1; /* 正方形を維持 */
-  max-width: 100px; /* どんなに広くても100px以下 */
+  width: 15vw;              /* 画面幅に対して15% */
+  aspect-ratio: 1 / 1;      /* 正方形 */
+  max-width: 100px;         /* 最大サイズ制限 */
+  transition: transform 0.3s;
 }
 
 .stamp img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  display: block;
+}
+
+/* スタンプが取得済みの見た目 */
+.got {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+/* スマホ対応 */
+@media (max-width: 600px) {
+  .stamp {
+    width: 20vw; /* スマホは少し大きめに */
+  }
+
+  .index-page {
+    background: url("images/backgrounds/mimi.jpg") no-repeat center center;
+    background-size: cover;
+  }
 }

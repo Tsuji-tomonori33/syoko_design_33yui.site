@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>スポット5 | 獅子島スタンプラリー</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="spot-page">
+  <h2>スポット5：〇〇展望台</h2>
+  <p>ここは獅子島の絶景ポイントです。海と空が広がる美しい風景を楽しめます。</p>
+
+  <button onclick="getStamp(5)">スタンプを押す！</button>
+  <p><a href="index.html">← スタンプ帳に戻る</a></p>
+
+  <script>
+    function getStamp(num) {
+      localStorage.setItem(`stamp${num}`, "get");
+      alert(`スタンプ${num}を獲得しました！`);
+    }
+  </script>
+</body>
+</html>

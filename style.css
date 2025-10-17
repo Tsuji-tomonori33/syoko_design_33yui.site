@@ -15,7 +15,7 @@ body {
   overflow-x: hidden;
 }
 
-/* PCやタブレットではフルカバー */
+/* PCやタブレットでは全画面カバー */
 @media (min-width: 768px) {
   .index-page {
     background-size: cover;
@@ -34,16 +34,15 @@ h1 {
   width: 100%;
   max-width: 420px;
   margin: 30px auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
-  row-gap: 20px;
+  height: 600px; /* ボードの高さを固定してドラッグしやすく */
+  border: 1px solid #ccc; /* 開発版では位置確認用 */
 }
 
 .stamp img {
   width: 90px;
   height: auto;
   transition: transform 0.2s ease;
+  cursor: grab;
 }
 
 .got img {
@@ -59,7 +58,7 @@ h1 {
 }
 
 /* リセットボタン */
-#reset-button {
+#reset-button, #reset {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -73,11 +72,11 @@ h1 {
   z-index: 100;
 }
 
-#reset-button:hover {
+#reset-button:hover, #reset:hover {
   background: #eee;
 }
 
-/* 開発版の座標出力エリア */
+/* 開発版用出力エリア */
 pre {
   text-align: left;
   background: #f5f5f5;

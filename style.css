@@ -5,22 +5,14 @@ body {
   padding: 0;
 }
 
-/* 背景画像 */
+/* 背景画像：横幅いっぱい、上下余白白 */
 .index-page {
   background: url("images/backgrounds/haikei.jpg") no-repeat top center;
-  background-size: 100% auto; /* 横幅にフィット */
-  background-color: white;    /* 上下余白は白 */
+  background-size: 100% auto;
+  background-color: white;
   color: white;
   min-height: 100vh;
   overflow-x: hidden;
-}
-
-/* PCやタブレットでは全画面カバー */
-@media (min-width: 768px) {
-  .index-page {
-    background-size: cover;
-    background-position: center center;
-  }
 }
 
 h1 {
@@ -28,16 +20,16 @@ h1 {
   font-size: 1.5em;
 }
 
-/* スタンプボード */
+/* スタンプボード（枠線なし） */
 .stamp-board {
   position: relative;
   width: 100%;
   max-width: 420px;
   margin: 30px auto;
-  height: 600px; /* ボードの高さを固定してドラッグしやすく */
-  border: 1px solid #ccc; /* 開発版では位置確認用 */
+  height: 600px; /* ドラッグ領域を確保 */
 }
 
+/* スタンプ */
 .stamp img {
   width: 90px;
   height: auto;

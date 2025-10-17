@@ -1,66 +1,52 @@
-// スタンプ要素を取得
-const stamps = document.querySelectorAll(".stamp");
-let currentStamp = null;
+const stamps = document.querySelectorAll('.stamp');
+let dragging = null;
 let offsetX, offsetY;
 
-// ロード時に保存された位置を反映
-window.addEventListener("load", () => {
-  stamps.forEach(stamp => {
-    const id = stamp.id;
-    const pos = localStorage.getItem(id);
-    if (pos) {
-      const { left, top } = JSON.parse(pos);
-      stamp.style.left = left;
-      stamp.style.top = top;
-    } else {
-      // デフォルト位置
-      stamp.style.left = Math.random() * 60 + 20 + "%";
-      stamp.style.top = Math.random() * 60 + 20 + "%";
-    }
-  });
-});
-
-// ドラッグ処理
 stamps.forEach(stamp => {
-  stamp.addEventListener("mousedown", e => {
-    currentStamp = stamp;
+  const id = stamp.id;
+  const saved = JSON.parse(localStorage.getItem(id));
+  if (saved) {
+    stamp.style.left = saved.left;
+    stamp.style.top = saved.top;
+  }
+
+  stamp.addEventListener('mousedown', e => {
+    dragging = stamp;
     offsetX = e.offsetX;
     offsetY = e.offsetY;
   });
 
-  document.addEventListener("mousemove", e => {
-    if (!currentStamp) return;
-    const rect = currentStamp.parentElement.getBoundingClientRect();
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const board = document.querySelector('.stamp-board');
+    const rect = board.getBoundingClientRect();
     const x = e.clientX - rect.left - offsetX;
     const y = e.clientY - rect.top - offsetY;
-    currentStamp.style.left = `${x}px`;
-    currentStamp.style.top = `${y}px`;
+    dragging.style.left = `${x}px`;
+    dragging.style.top = `${y}px`;
   });
 
-  document.addEventListener("mouseup", () => {
-    if (currentStamp) {
-      const id = currentStamp.id;
-      localStorage.setItem(id, JSON.stringify({
-        left: currentStamp.style.left,
-        top: currentStamp.style.top
-      }));
-      currentStamp = null;
-    }
+  document.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    const id = dragging.id;
+    localStorage.setItem(id, JSON.stringify({
+      left: dragging.style.left,
+      top: dragging.style.top
+    }));
+    dragging = null;
   });
 });
 
-// リセットボタン
-document.getElementById("reset").addEventListener("click", () => {
+document.getElementById('export').addEventListener('click', () => {
+  const positions = {};
+  stamps.forEach(stamp => {
+    positions[stamp.id] = JSON.parse(localStorage.getItem(stamp.id));
+  });
+  localStorage.setItem('stampPositions', JSON.stringify(positions));
+  document.getElementById('output').textContent = JSON.stringify(positions, null, 2);
+});
+
+document.getElementById('reset').addEventListener('click', () => {
   localStorage.clear();
   location.reload();
-});
-
-// 座標出力
-document.getElementById("export").addEventListener("click", () => {
-  const output = {};
-  stamps.forEach(stamp => {
-    const pos = localStorage.getItem(stamp.id);
-    if (pos) output[stamp.id] = JSON.parse(pos);
-  });
-  document.getElementById("output").textContent = JSON.stringify(output, null, 2);
 });

@@ -2,20 +2,23 @@ const stamps = document.querySelectorAll('.stamp');
 let dragging = null;
 let offsetX, offsetY;
 
+// 位置初期化
 stamps.forEach(stamp => {
-  const id = stamp.id;
-  const saved = JSON.parse(localStorage.getItem(id));
+  const saved = JSON.parse(localStorage.getItem(stamp.id));
   if (saved) {
+    stamp.style.position = 'absolute';
     stamp.style.left = saved.left;
     stamp.style.top = saved.top;
   }
 
+  // ドラッグ開始
   stamp.addEventListener('mousedown', e => {
     dragging = stamp;
     offsetX = e.offsetX;
     offsetY = e.offsetY;
   });
 
+  // ドラッグ中
   document.addEventListener('mousemove', e => {
     if (!dragging) return;
     const board = document.querySelector('.stamp-board');
@@ -26,10 +29,10 @@ stamps.forEach(stamp => {
     dragging.style.top = `${y}px`;
   });
 
+  // ドラッグ終了
   document.addEventListener('mouseup', () => {
     if (!dragging) return;
-    const id = dragging.id;
-    localStorage.setItem(id, JSON.stringify({
+    localStorage.setItem(dragging.id, JSON.stringify({
       left: dragging.style.left,
       top: dragging.style.top
     }));
@@ -37,15 +40,18 @@ stamps.forEach(stamp => {
   });
 });
 
+// 座標をまとめて出力（完全版用）
 document.getElementById('export').addEventListener('click', () => {
   const positions = {};
   stamps.forEach(stamp => {
-    positions[stamp.id] = JSON.parse(localStorage.getItem(stamp.id));
+    const pos = JSON.parse(localStorage.getItem(stamp.id));
+    if (pos) positions[stamp.id] = pos;
   });
   localStorage.setItem('stampPositions', JSON.stringify(positions));
   document.getElementById('output').textContent = JSON.stringify(positions, null, 2);
 });
 
+// 開発版リセット
 document.getElementById('reset').addEventListener('click', () => {
   localStorage.clear();
   location.reload();

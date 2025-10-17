@@ -3,7 +3,6 @@ body {
   text-align: center;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
 }
 
 .index-page {
@@ -11,90 +10,55 @@ body {
   background-size: cover;
   color: white;
   min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
-/* スタンプボード */
 .stamp-board {
   position: relative;
   width: 100%;
   height: 80vh;
 }
 
-/* スタンプ枠 */
 .stamp {
   position: absolute;
-  width: 15vw;
-  aspect-ratio: 1 / 1;
-  max-width: 100px;
+  width: 100px;
+  height: 100px;
+  cursor: move;
+  border: 2px dashed rgba(255,255,255,0.6);
+  border-radius: 12px;
+  box-sizing: border-box;
 }
 
 .stamp img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  display: block;
 }
 
-#reset {
-  position: relative;
-  margin: 20px auto;
-  display: block;
-  padding: 10px 15px;
-  background: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1em;
-  z-index: 10;
-}
-
-#reset:hover {
-  background: #c0392b;
-}
-
-/* スポットページ */
-.spot-page {
-  background: #fffaf0;
-  text-align: center;
-  padding: 20px;
-}
-
-.spot-bg img {
-  width: 90%;
-  max-width: 400px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.stamp-button button {
-  font-size: 1.2em;
-  background: #ff9800;
-  color: white;
-  border: none;
+.buttons {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.5);
   padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 10px;
 }
 
-.stamp-button button:disabled {
-  background: gray;
-  cursor: default;
+button {
+  margin: 0 5px;
+  padding: 6px 12px;
+  font-size: 14px;
 }
 
-.back-home a {
-  display: inline-block;
-  margin-top: 20px;
-  color: #007bff;
-  text-decoration: none;
-}
-
-/* スマホ対応 */
-@media (max-width: 600px) {
-  .stamp {
-    width: 20vw;
-  }
-  .index-page {
-    background-size: cover;
-  }
+pre {
+  background: rgba(0,0,0,0.5);
+  color: #0f0;
+  font-size: 12px;
+  padding: 10px;
+  text-align: left;
+  margin: 20px auto;
+  width: 90%;
+  border-radius: 10px;
 }

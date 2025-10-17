@@ -5,17 +5,17 @@ body {
   padding: 0;
 }
 
-/* ✅ スマホ最適化された背景設定 */
+/* 背景画像 */
 .index-page {
   background: url("images/backgrounds/haikei.jpg") no-repeat top center;
-  background-size: 100% auto; /* 横幅に合わせて縮小 */
-  background-color: white; /* 上下の余白は白で塗る */
+  background-size: 100% auto; /* 横幅にフィット */
+  background-color: white;    /* 上下余白は白 */
   color: white;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* PCやタブレットではフルカバー表示に変更 */
+/* PCやタブレットではフルカバー */
 @media (min-width: 768px) {
   .index-page {
     background-size: cover;
@@ -28,7 +28,7 @@ h1 {
   font-size: 1.5em;
 }
 
-/* スタンプ一覧 */
+/* スタンプボード */
 .stamp-board {
   position: relative;
   width: 100%;
@@ -58,7 +58,7 @@ h1 {
   margin-top: 20px;
 }
 
-/* 🔄 リセットボタン */
+/* リセットボタン */
 #reset-button {
   position: fixed;
   bottom: 20px;
@@ -75,4 +75,19 @@ h1 {
 
 #reset-button:hover {
   background: #eee;
+}
+
+/* 開発版の座標出力エリア */
+pre {
+  text-align: left;
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 6px;
+  width: 80%;
+  margin: 10px auto;
+  overflow-x: auto;
+}
+
+.buttons {
+  margin: 10px;
 }

@@ -1,4 +1,19 @@
-// === スタンプ状態をロード ===
+// 開発版で設定した座標を反映
+window.addEventListener('DOMContentLoaded', () => {
+  const positions = JSON.parse(localStorage.getItem('stampPositions')) || {};
+  for (const id in positions) {
+    const el = document.getElementById(id);
+    if (el && positions[id]) {
+      el.style.position = 'absolute';
+      el.style.left = positions[id].left;
+      el.style.top = positions[id].top;
+    }
+  }
+
+  loadStamps();
+});
+
+// スタンプ状態反映
 function loadStamps() {
   let allGot = true;
   for (let i = 1; i <= 5; i++) {
@@ -17,9 +32,7 @@ function loadStamps() {
   }
 }
 
-loadStamps();
-
-// === リセットボタン ===
+// リセットボタン
 document.getElementById("reset-button").addEventListener("click", () => {
   if (confirm("スタンプをすべてリセットしますか？")) {
     for (let i = 1; i <= 5; i++) {

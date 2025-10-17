@@ -1,54 +1,78 @@
 body {
-  background: #fff;
-  font-family: "Hiragino Sans", sans-serif;
+  font-family: sans-serif;
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
+/* ✅ スマホ最適化された背景設定 */
+.index-page {
+  background: url("images/backgrounds/haikei.jpg") no-repeat top center;
+  background-size: 100% auto; /* 横幅に合わせて縮小 */
+  background-color: white; /* 上下の余白は白で塗る */
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* PCやタブレットではフルカバー表示に変更 */
+@media (min-width: 768px) {
+  .index-page {
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+h1 {
+  margin-top: 20px;
+  font-size: 1.5em;
+}
+
+/* スタンプ一覧 */
 .stamp-board {
   position: relative;
-  width: 90vw;
-  max-width: 800px;
-  margin: 20px auto;
-}
-
-.background {
   width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.2);
-}
-
-.stamp {
-  position: absolute;
-  width: 8vw;
-  max-width: 80px;
-  cursor: grab;
-  user-select: none;
+  max-width: 420px;
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  row-gap: 20px;
 }
 
 .stamp img {
-  width: 100%;
+  width: 90px;
   height: auto;
-  border-radius: 10%;
+  transition: transform 0.2s ease;
 }
 
-button {
-  margin: 10px;
-  padding: 8px 16px;
-  border: none;
+.got img {
+  opacity: 0.6;
+  transform: scale(0.95);
+}
+
+/* コンプリートメッセージ */
+#complete-message {
+  color: yellow;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* 🔄 リセットボタン */
+#reset-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  color: black;
+  border: 2px solid #333;
   border-radius: 8px;
-  background: #4caf50;
-  color: white;
-  font-size: 16px;
+  padding: 8px 12px;
+  font-weight: bold;
   cursor: pointer;
+  z-index: 100;
 }
 
-pre {
-  text-align: left;
-  background: #f5f5f5;
-  padding: 10px;
-  border-radius: 6px;
-  width: 80%;
-  margin: 10px auto;
-  overflow-x: auto;
+#reset-button:hover {
+  background: #eee;
 }

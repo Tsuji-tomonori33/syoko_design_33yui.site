@@ -40,4 +40,3 @@ document.getElementById("reset-button").addEventListener("click", () => {
     }
     location.reload();
   }
-});

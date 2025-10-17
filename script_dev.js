@@ -18,6 +18,7 @@ stamps.forEach(stamp => {
     dragging = stamp;
     offsetX = e.offsetX;
     offsetY = e.offsetY;
+    stamp.style.cursor = 'grabbing';
   });
 });
 
@@ -29,7 +30,6 @@ document.addEventListener('mousemove', e => {
   let x = e.clientX - rect.left - offsetX;
   let y = e.clientY - rect.top - offsetY;
 
-  // ボード内に制限
   x = Math.max(0, Math.min(rect.width - dragging.offsetWidth, x));
   y = Math.max(0, Math.min(rect.height - dragging.offsetHeight, y));
 
@@ -44,10 +44,11 @@ document.addEventListener('mouseup', () => {
     left: dragging.style.left,
     top: dragging.style.top
   }));
+  dragging.style.cursor = 'grab';
   dragging = null;
 });
 
-// 出力ボタン
+// 座標出力
 document.getElementById('export').addEventListener('click', () => {
   const positions = {};
   stamps.forEach(stamp => {
@@ -57,7 +58,7 @@ document.getElementById('export').addEventListener('click', () => {
   document.getElementById('output').textContent = JSON.stringify(positions, null, 2);
 });
 
-// リセットボタン
+// リセット
 document.getElementById('reset').addEventListener('click', () => {
   localStorage.clear();
   location.reload();

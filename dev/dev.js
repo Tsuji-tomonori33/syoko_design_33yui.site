@@ -1,5 +1,7 @@
 const stamps = document.querySelectorAll(".stamp");
+const sizeSlider = document.getElementById("size-slider");
 
+// ドラッグ機能
 stamps.forEach(stamp => {
   let isDragging = false;
   let offsetX, offsetY;
@@ -19,7 +21,6 @@ stamps.forEach(stamp => {
     let left = e.clientX - boardRect.left - offsetX;
     let top = e.clientY - boardRect.top - offsetY;
 
-    // ボード内に制限
     left = Math.max(0, Math.min(left, boardRect.width - stamp.offsetWidth));
     top = Math.max(0, Math.min(top, boardRect.height - stamp.offsetHeight));
 
@@ -35,15 +36,23 @@ stamps.forEach(stamp => {
   });
 });
 
+// スライダーで全スタンプの大きさ変更
+sizeSlider.addEventListener("input", () => {
+  const sizePercent = sizeSlider.value + "%";
+  stamps.forEach(stamp => {
+    stamp.style.width = sizePercent;
+  });
+});
+
 // JSON出力
 document.getElementById("export").addEventListener("click", () => {
   const data = {};
   stamps.forEach(stamp => {
     data[stamp.id] = {
       left: stamp.style.left,
-      top: stamp.style.top
+      top: stamp.style.top,
+      width: stamp.style.width
     };
   });
-  const output = document.getElementById("output");
-  output.textContent = JSON.stringify(data, null, 2);
+  document.getElementById("output").textContent = JSON.stringify(data, null, 2);
 });

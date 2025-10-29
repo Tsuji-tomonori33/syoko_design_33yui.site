@@ -1,6 +1,8 @@
 const stampIds = ["stamp1","stamp2","stamp3","stamp4","stamp5"];
 const stampBoard = document.querySelector(".stamp-board");
 let dragged = null;
+let offsetX = 0;
+let offsetY = 0;
 
 // 初期座標（％）
 const stampPositions = {
@@ -25,31 +27,47 @@ function applyStampPositions() {
   });
 }
 
-// ドラッグ開始
+// ドラッグ機能（マウス）
 stampIds.forEach(id => {
   const stamp = document.getElementById(id);
-  stamp.setAttribute("draggable", "true");
-  stamp.addEventListener("dragstart", e => { dragged = stamp; });
+  stamp.addEventListener("mousedown", e => {
+    dragged = stamp;
+    const rect = dragged.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    stamp.style.cursor = "grabbing";
+  });
 });
 
-// ドロップ
-stampBoard.addEventListener("dragover", e => e.preventDefault());
-stampBoard.addEventListener("drop", e => {
-  e.preventDefault();
+document.addEventListener("mousemove", e => {
+  if (!dragged) return;
+  const bg = document.querySelector(".background");
+  const bgRect = bg.getBoundingClientRect();
+  const x = e.clientX - bgRect.left - offsetX;
+  const y = e.clientY - bgRect.top - offsetY;
+
+  dragged.style.left = `${x}px`;
+  dragged.style.top = `${y}px`;
+});
+
+document.addEventListener("mouseup", e => {
   if (!dragged) return;
 
-  const rect = stampBoard.getBoundingClientRect();
   const bg = document.querySelector(".background");
   const bgWidth = bg.clientWidth;
   const bgHeight = bg.clientHeight;
 
-  const leftPercent = ((e.clientX - rect.left - dragged.offsetWidth/2) / bgWidth) * 100;
-  const topPercent = ((e.clientY - rect.top - dragged.offsetHeight/2) / bgHeight) * 100;
+  const rect = dragged.getBoundingClientRect();
+  const parentRect = bg.getBoundingClientRect();
+
+  const leftPercent = ((rect.left - parentRect.left) / bgWidth) * 100;
+  const topPercent = ((rect.top - parentRect.top) / bgHeight) * 100;
 
   stampPositions[dragged.id].left = leftPercent;
   stampPositions[dragged.id].top = topPercent;
 
   applyStampPositions();
+  dragged.style.cursor = "grab";
   dragged = null;
 });
 
@@ -67,7 +85,6 @@ document.getElementById("download-json").addEventListener("click", () => {
   const jsonStr = JSON.stringify(stampPositions, null, 2);
   document.getElementById("json-output").textContent = jsonStr;
 
-  // 自動ダウンロード
   const blob = new Blob([jsonStr], {type: "application/json"});
   const url = URL.createObjectURL(blob);
 

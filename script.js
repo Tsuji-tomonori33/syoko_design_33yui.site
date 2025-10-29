@@ -1,56 +1,65 @@
-// スタンプ状態を localStorage から読み込んで反映
+// スタンプ位置データ
+const stampPositions = {
+  "stamp1": { "left": "10%", "top": "15%" },
+  "stamp2": { "left": "30%", "top": "40%" },
+  "stamp3": { "left": "50%", "top": "60%" },
+  "stamp4": { "left": "70%", "top": "35%" },
+  "stamp5": { "left": "60%", "top": "20%" }
+};
+
+// スタンプ位置反映
+function applyStampPositions() {
+  for (const [id, pos] of Object.entries(stampPositions)) {
+    const stamp = document.getElementById(id);
+    if (stamp) {
+      stamp.style.left = pos.left;
+      stamp.style.top = pos.top;
+    }
+  }
+}
+
+// スタンプ状態反映
 function loadStamps() {
   for (let i = 1; i <= 5; i++) {
     const stamp = document.getElementById("stamp" + i);
     const state = localStorage.getItem("stamp" + i);
     if (state === "get") {
       stamp.classList.add("collected");
-      stamp.querySelector("img").src = `images/stamps/stamp${i}_got.png`;
     } else {
       stamp.classList.remove("collected");
-      stamp.querySelector("img").src = `images/stamps/stamp${i}.png`;
     }
   }
-
-  // 全スタンプ獲得チェック
   checkCompletion();
 }
 
 // 全スタンプ獲得チェック
 function checkCompletion() {
-  const stamps = document.querySelectorAll(".stamp");
-  const completeMsg = document.getElementById("complete-message");
-  const allCollected = Array.from(stamps).every(stamp =>
-    stamp.classList.contains("collected")
-  );
-  completeMsg.style.display = allCollected ? "block" : "none";
+  const allCollected = Array.from(document.querySelectorAll(".stamp"))
+    .every(stamp => stamp.classList.contains("collected"));
+  document.getElementById("complete-message").style.display =
+    allCollected ? "block" : "none";
 }
 
-// スタンプクリックで手動切り替え
-const stamps = document.querySelectorAll(".stamp");
-stamps.forEach(stamp => {
+// スタンプクリック（手動切替）
+document.querySelectorAll(".stamp").forEach(stamp => {
   stamp.addEventListener("click", () => {
     const id = stamp.id;
     const collected = stamp.classList.toggle("collected");
-    if (collected) {
-      stamp.querySelector("img").src = `images/stamps/${id}_got.png`;
-      localStorage.setItem(id, "get");
-    } else {
-      stamp.querySelector("img").src = `images/stamps/${id}.png`;
-      localStorage.removeItem(id);
-    }
+    if (collected) localStorage.setItem(id, "get");
+    else localStorage.removeItem(id);
     checkCompletion();
   });
 });
 
 // リセットボタン
-const resetButton = document.getElementById("reset-button");
-resetButton.addEventListener("click", () => {
-  for (let i = 1; i <= 5; i++) {
-    localStorage.removeItem("stamp" + i);
-  }
+document.getElementById("reset-button").addEventListener("click", () => {
+  if (!confirm("本当に全てのスタンプをリセットしますか？")) return;
+  for (let i = 1; i <= 5; i++) localStorage.removeItem("stamp" + i);
   loadStamps();
 });
 
-// ページロード時に反映
-window.addEventListener("DOMContentLoaded", loadStamps);
+// 初期化
+window.addEventListener("DOMContentLoaded", () => {
+  applyStampPositions();
+  loadStamps();
+});

@@ -1,47 +1,49 @@
 const stamps = document.querySelectorAll(".stamp");
-const board = document.getElementById("board");
-const output = document.getElementById("output");
-const exportBtn = document.getElementById("exportBtn");
 
 stamps.forEach(stamp => {
-  let offsetX, offsetY, isDragging = false;
+  let isDragging = false;
+  let offsetX, offsetY;
 
   stamp.addEventListener("mousedown", (e) => {
     isDragging = true;
-    offsetX = e.clientX - stamp.getBoundingClientRect().left;
-    offsetY = e.clientY - stamp.getBoundingClientRect().top;
-    stamp.style.zIndex = 1000;
+    const rect = stamp.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    stamp.style.cursor = "grabbing";
   });
 
   document.addEventListener("mousemove", (e) => {
     if (!isDragging) return;
+    const board = document.querySelector(".stamp-board");
     const boardRect = board.getBoundingClientRect();
-    let x = e.clientX - boardRect.left - offsetX;
-    let y = e.clientY - boardRect.top - offsetY;
+    let left = e.clientX - boardRect.left - offsetX;
+    let top = e.clientY - boardRect.top - offsetY;
 
-    // 移動制限（ボード内）
-    x = Math.max(0, Math.min(boardRect.width - stamp.offsetWidth, x));
-    y = Math.max(0, Math.min(boardRect.height - stamp.offsetHeight, y));
+    // ボード内に制限
+    left = Math.max(0, Math.min(left, boardRect.width - stamp.offsetWidth));
+    top = Math.max(0, Math.min(top, boardRect.height - stamp.offsetHeight));
 
-    stamp.style.left = `${x}px`;
-    stamp.style.top = `${y}px`;
+    stamp.style.left = left + "px";
+    stamp.style.top = top + "px";
   });
 
   document.addEventListener("mouseup", () => {
-    isDragging = false;
-    stamp.style.zIndex = 1;
+    if (isDragging) {
+      isDragging = false;
+      stamp.style.cursor = "grab";
+    }
   });
 });
 
-// JSON出力ボタン
-exportBtn.addEventListener("click", () => {
+// JSON出力
+document.getElementById("export").addEventListener("click", () => {
   const data = {};
   stamps.forEach(stamp => {
     data[stamp.id] = {
-      left: stamp.style.left || "0px",
-      top: stamp.style.top || "0px"
+      left: stamp.style.left,
+      top: stamp.style.top
     };
   });
-  const json = JSON.stringify(data, null, 2);
-  output.textContent = json;
+  const output = document.getElementById("output");
+  output.textContent = JSON.stringify(data, null, 2);
 });

@@ -4,11 +4,11 @@ let dragged = null;
 
 // 初期座標（％）
 const stampPositions = {
-  "stamp1": { left: 10, top: 15, width: 12 },
-  "stamp2": { left: 30, top: 40, width: 12 },
-  "stamp3": { left: 50, top: 60, width: 12 },
-  "stamp4": { left: 70, top: 35, width: 12 },
-  "stamp5": { left: 60, top: 20, width: 12 }
+  "stamp1": { left: 10, top: 15, width: 80 },
+  "stamp2": { left: 30, top: 40, width: 80 },
+  "stamp3": { left: 50, top: 60, width: 80 },
+  "stamp4": { left: 70, top: 35, width: 80 },
+  "stamp5": { left: 60, top: 20, width: 80 }
 };
 
 // スタンプ配置
@@ -22,16 +22,14 @@ function applyStampPositions() {
     const stamp = document.getElementById(id);
     stamp.style.left = `${(pos.left/100)*bgWidth}px`;
     stamp.style.top = `${(pos.top/100)*bgHeight}px`;
-    stamp.style.width = `${pos.width}%`;
+    stamp.querySelector("img").style.width = `${pos.width}px`;
   });
 }
 
 // ドラッグ開始
 stampIds.forEach(id => {
   const stamp = document.getElementById(id);
-  stamp.addEventListener("dragstart", e => {
-    dragged = stamp;
-  });
+  stamp.addEventListener("dragstart", e => { dragged = stamp; });
 });
 
 // ドロップ

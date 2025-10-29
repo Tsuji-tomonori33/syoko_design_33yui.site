@@ -1,22 +1,27 @@
 {
   "stamp1": {
-    "left": "124px",
-    "top": "201px"
+    "left": "85px",
+    "top": "184px",
+    "width": "30%"
   },
   "stamp2": {
-    "left": "294px",
-    "top": "120px"
+    "left": "402px",
+    "top": "215px",
+    "width": "30%"
   },
   "stamp3": {
-    "left": "14px",
-    "top": "336px"
+    "left": "168px",
+    "top": "367px",
+    "width": "30%"
   },
   "stamp4": {
-    "left": "147px",
-    "top": "470px"
+    "left": "406px",
+    "top": "460px",
+    "width": "30%"
   },
   "stamp5": {
-    "left": "292px",
-    "top": "247px"
+    "left": "94px",
+    "top": "563px",
+    "width": "30%"
   }
 }

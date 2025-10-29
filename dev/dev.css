@@ -14,9 +14,6 @@ body {
   max-width: 600px;
   margin: 20px auto;
   height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
 }
 
 .background {
@@ -24,9 +21,10 @@ body {
   height: auto;
   object-fit: contain;
   object-position: center top;
-  position: absolute;
+  position: relative;
   z-index: 0;
   pointer-events: none;
+  display: block;
 }
 
 .stamp {
@@ -36,8 +34,9 @@ body {
 }
 
 .stamp img {
-  width: 120px; /* 初期サイズ */
+  width: 120px;
   height: auto;
+  user-select: none;
 }
 
 .controls {

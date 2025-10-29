@@ -1,34 +1,32 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>開発版スタンプ配置</title>
+  <title>開発版スタンプ配置（最高版）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="dev.css">
 </head>
 <body>
-  <div class="stamp-board">
-    <img src="images/backgrounds/card_background.png" class="background" alt="カード背景">
 
-    <div class="stamp" id="stamp1" draggable="true"><img src="images/stamps/stamp1.png" alt="スタンプ1"></div>
-    <div class="stamp" id="stamp2" draggable="true"><img src="images/stamps/stamp2.png" alt="スタンプ2"></div>
-    <div class="stamp" id="stamp3" draggable="true"><img src="images/stamps/stamp3.png" alt="スタンプ3"></div>
-    <div class="stamp" id="stamp4" draggable="true"><img src="images/stamps/stamp4.png" alt="スタンプ4"></div>
-    <div class="stamp" id="stamp5" draggable="true"><img src="images/stamps/stamp5.png" alt="スタンプ5"></div>
-  </div>
+<div class="stamp-board">
+  <img src="images/backgrounds/card_background.png" class="background" alt="カード背景">
 
-  <div class="size-controls">
-    <label>スタンプ1サイズ: <input type="range" id="size1" min="30" max="150" value="80"> px</label>
-    <label>スタンプ2サイズ: <input type="range" id="size2" min="30" max="150" value="80"> px</label>
-    <label>スタンプ3サイズ: <input type="range" id="size3" min="30" max="150" value="80"> px</label>
-    <label>スタンプ4サイズ: <input type="range" id="size4" min="30" max="150" value="80"> px</label>
-    <label>スタンプ5サイズ: <input type="range" id="size5" min="30" max="150" value="80"> px</label>
-  </div>
+  <div class="stamp" id="stamp1"><img src="images/stamps/stamp1.png" alt="スタンプ1"></div>
+  <div class="stamp" id="stamp2"><img src="images/stamps/stamp2.png" alt="スタンプ2"></div>
+  <div class="stamp" id="stamp3"><img src="images/stamps/stamp3.png" alt="スタンプ3"></div>
+  <div class="stamp" id="stamp4"><img src="images/stamps/stamp4.png" alt="スタンプ4"></div>
+  <div class="stamp" id="stamp5"><img src="images/stamps/stamp5.png" alt="スタンプ5"></div>
+</div>
 
-  <button id="output-button">座標出力</button>
-  <pre id="json-output"></pre>
+<div class="controls">
+  <label>スタンプサイズ:
+    <input type="range" id="size-all" min="50" max="250" value="120"> px
+  </label>
+  <button id="download-json">JSONダウンロード</button>
+</div>
 
-  <script src="dev.js"></script>
+<pre id="json-output"></pre>
+
+<script src="dev.js"></script>
 </body>
 </html>

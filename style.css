@@ -13,25 +13,29 @@ body {
   max-width: 600px;      /* PC時の最大幅 */
   margin: 0 auto;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff; /* 両サイドの余白 */
   overflow: hidden;
 }
 
 /* 背景画像 */
 .background {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: auto;
+  width: auto;           /* 横幅は自動 */
+  height: 100%;          /* 高さを画面いっぱいに */
+  max-width: 100%;
   max-height: 100%;
   pointer-events: none;
+  position: relative;
+  z-index: 0;
 }
 
 /* スタンプ */
 .stamp {
   position: absolute;
   display: none; /* 未獲得は非表示 */
+  z-index: 1;
 }
 
 .stamp img {
@@ -65,13 +69,4 @@ body {
 
 #reset-button:hover {
   background-color: #005fa3;
-}
-
-/* レスポンシブ：PC画面で背景に余白表示 */
-@media (min-width: 601px) {
-  body {
-    display: flex;
-    justify-content: center;
-    background: #fff;
-  }
 }

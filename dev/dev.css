@@ -27,13 +27,17 @@ body {
 .stamp {
   position: absolute;
   cursor: grab;
-  width: 10%;
+  width: 10%; /* 初期サイズ */
   height: auto;
 }
 
 .stamp img {
   width: 100%;
   height: auto;
+}
+
+.controls {
+  margin: 10px 0;
 }
 
 #export {

@@ -2,26 +2,22 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>スタンプ配置 開発版</title>
+  <title>スタンプ位置開発版</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="dev.css">
 </head>
 <body>
-  <h1>🎨 スタンプ配置ツール（開発用）</h1>
-  <p>スタンプをドラッグして配置し、「JSONを出力」を押してください。</p>
+  <div class="stamp-board">
+    <img src="images/backgrounds/card_background.png" class="background" alt="カード背景">
 
-  <div class="board" id="board">
-    <img src="../images/backgrounds/haikei.jpg" alt="背景" class="background">
-
-    <div class="stamp" id="stamp1"><img src="../images/stamps/stamp1.png" alt="stamp1"></div>
-    <div class="stamp" id="stamp2"><img src="../images/stamps/stamp2.png" alt="stamp2"></div>
-    <div class="stamp" id="stamp3"><img src="../images/stamps/stamp3.png" alt="stamp3"></div>
-    <div class="stamp" id="stamp4"><img src="../images/stamps/stamp4.png" alt="stamp4"></div>
-    <div class="stamp" id="stamp5"><img src="../images/stamps/stamp5.png" alt="stamp5"></div>
+    <div class="stamp" id="stamp1"><img src="images/stamps/stamp1.png" alt="スタンプ1"></div>
+    <div class="stamp" id="stamp2"><img src="images/stamps/stamp2.png" alt="スタンプ2"></div>
+    <div class="stamp" id="stamp3"><img src="images/stamps/stamp3.png" alt="スタンプ3"></div>
+    <div class="stamp" id="stamp4"><img src="images/stamps/stamp4.png" alt="スタンプ4"></div>
+    <div class="stamp" id="stamp5"><img src="images/stamps/stamp5.png" alt="スタンプ5"></div>
   </div>
 
-  <button id="exportBtn">JSONを出力</button>
-
+  <button id="export">📤 JSON出力</button>
   <pre id="output"></pre>
 
   <script src="dev.js"></script>

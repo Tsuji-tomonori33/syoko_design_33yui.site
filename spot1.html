@@ -3,42 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <title>スポット1 | 獅子島スタンプラリー</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="spot-page">
 
-  <div class="spot-bg">
-    <h1>🐾 スポット1：獅子島展望台 🗻</h1>
-    <img src="images/backgrounds/spot1.jpg" alt="スポット1写真">
-    <p>島の絶景が一望できる人気の展望台です。天気が良い日には遠くの島まで見渡せます。</p>
-  </div>
+<div class="spot-bg">
+  <h1>🐾 スポット1：獅子島展望台 🗻</h1>
+  <img src="images/backgrounds/spot1.jpg" alt="スポット1写真">
+  <p>島の絶景が一望できる人気の展望台です。天気が良い日には遠くの島まで見渡せます。</p>
+</div>
 
-  <div class="stamp-button">
-    <button id="get-stamp">🎯 スタンプを押す！</button>
-  </div>
+<div class="stamp-button">
+  <button id="get-stamp">🎯 スタンプを押す！</button>
+</div>
 
-  <p id="message" style="display:none; color:green; font-weight:bold;">
-    ✅ スタンプ1を獲得しました！
-  </p>
+<p id="message" style="display:none; color:green; font-weight:bold;">
+  ✅ スタンプ1を獲得しました！
+</p>
 
-  <div class="back-home">
-    <a href="index.html">🏠 スタンプ帳へ戻る</a>
-  </div>
+<div class="back-home">
+  <a href="index.html">🏠 スタンプ帳へ戻る</a>
+</div>
 
-  <script>
-    const button = document.getElementById("get-stamp");
-    const message = document.getElementById("message");
+<script>
+const button = document.getElementById("get-stamp");
+const message = document.getElementById("message");
 
-    button.addEventListener("click", () => {
-      localStorage.setItem("stamp1", "get");
-      message.style.display = "block";
-      button.disabled = true;
-    });
+// すでに押していた場合
+if (localStorage.getItem("stamp1") === "get") {
+  message.style.display = "block";
+  button.disabled = true;
+}
 
-    if (localStorage.getItem("stamp1") === "get") {
-      message.style.display = "block";
-      button.disabled = true;
-    }
-  </script>
+// 押すとスタンプ獲得
+button.addEventListener("click", () => {
+  localStorage.setItem("stamp1", "get");
+  message.style.display = "block";
+  button.disabled = true;
+});
+</script>
 </body>
 </html>

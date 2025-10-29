@@ -1,0 +1,72 @@
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background: #f9f9f9;
+}
+
+h1 {
+  font-size: 1.3rem;
+  margin-top: 10px;
+}
+
+.board {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: 10px auto;
+  height: 100vh;
+  overflow: hidden;
+  border: 2px dashed #ccc;
+  background-color: #fff;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100vh;
+  width: auto;
+  pointer-events: none;
+}
+
+.stamp {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  cursor: move;
+}
+
+.stamp img {
+  width: 100%;
+  height: auto;
+}
+
+#exportBtn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#exportBtn:hover {
+  background-color: #005fa3;
+}
+
+#output {
+  text-align: left;
+  width: 90%;
+  max-width: 450px;
+  margin: 20px auto;
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

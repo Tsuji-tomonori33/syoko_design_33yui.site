@@ -1,16 +1,16 @@
 body {
   font-family: "Noto Sans JP", sans-serif;
-  text-align: center;
   margin: 0;
   padding: 0;
+  text-align: center;
   background-color: #fff;
 }
 
-.index-page {
-  min-height: 100vh;
+.index-page, .spot-page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
 }
 
 .stamp-board {
@@ -18,7 +18,6 @@ body {
   width: 100%;
   max-width: 600px;
   margin: 20px auto;
-  height: auto;
 }
 
 .background {
@@ -26,36 +25,31 @@ body {
   height: auto;
   object-fit: contain;
   object-position: center top;
-  display: block;
   pointer-events: none;
   z-index: 0;
+  display: block;
 }
 
 .stamp {
   position: absolute;
   z-index: 1;
-  cursor: move;
+  display: none; /* 初期非表示 */
 }
 
 .stamp img {
-  width: 150px; /* 開発版用に少し大きく表示 */
+  width: 150px; /* 大きめに表示 */
   height: auto;
   user-select: none;
 }
 
-#export-button {
+#reset-button {
   margin: 15px;
   padding: 8px 16px;
   font-size: 16px;
   cursor: pointer;
 }
 
-#output-json {
-  margin: 10px auto;
-  padding: 10px;
-  max-width: 600px;
-  text-align: left;
-  background: #f4f4f4;
-  border: 1px solid #ccc;
-  overflow-x: auto;
+.spot-bg img {
+  max-width: 90%;
+  border-radius: 10px;
 }

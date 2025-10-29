@@ -11,19 +11,18 @@ body {
 .stamp-board {
   position: relative;
   width: 100%;
-  max-width: 600px;           /* 完全版と同じ幅 */
+  max-width: 600px;
   margin: 20px auto;
   height: auto;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  overflow: visible;          /* 下部も表示 */
 }
 
 .background {
   width: 100%;
   height: auto;
-  object-fit: contain;        /* 縦横比保持 */
+  object-fit: contain;
   object-position: center top;
   position: absolute;
   z-index: 0;
@@ -37,17 +36,16 @@ body {
 }
 
 .stamp img {
-  width: 80px;   /* 初期大きさ */
+  width: 120px; /* 初期サイズ */
   height: auto;
 }
 
-.size-controls {
-  margin: 10px;
+.controls {
+  margin: 20px;
+  width: 90%;
+  max-width: 600px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.size-controls label {
-  font-size: 0.9rem;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
 }

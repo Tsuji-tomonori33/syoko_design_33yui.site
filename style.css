@@ -10,13 +10,13 @@ body {
 .stamp-board {
   position: relative;
   width: 100%;
-  max-width: 450px;
+  max-width: 600px;      /* PC時の最大幅 */
   margin: 0 auto;
   height: 100vh;
   overflow: hidden;
 }
 
-/* カード背景 */
+/* 背景画像 */
 .background {
   position: absolute;
   top: 0;
@@ -24,15 +24,14 @@ body {
   transform: translateX(-50%);
   width: 100%;
   height: auto;
+  max-height: 100%;
   pointer-events: none;
 }
 
-/* スタンプ（初期非表示） */
+/* スタンプ */
 .stamp {
   position: absolute;
-  display: none;
-  width: 10%;
-  height: auto;
+  display: none; /* 未獲得は非表示 */
 }
 
 .stamp img {
@@ -40,7 +39,7 @@ body {
   height: auto;
 }
 
-/* スタンプ獲得時に表示 */
+/* 獲得済み表示 */
 .stamp.collected {
   display: block;
 }
@@ -66,4 +65,13 @@ body {
 
 #reset-button:hover {
   background-color: #005fa3;
+}
+
+/* レスポンシブ：PC画面で背景に余白表示 */
+@media (min-width: 601px) {
+  body {
+    display: flex;
+    justify-content: center;
+    background: #fff;
+  }
 }

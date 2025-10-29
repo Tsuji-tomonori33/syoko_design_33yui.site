@@ -1,84 +1,40 @@
 body {
-  font-family: sans-serif;
-  text-align: center;
+  font-family: "Hiragino Kaku Gothic ProN", sans-serif;
   margin: 0;
   padding: 0;
+  text-align: center;
+  background: white;
 }
 
-/* 背景画像：横幅いっぱい、上下余白白 */
 .index-page {
-  background: url("images/backgrounds/haikei.jpg") no-repeat top center;
-  background-size: 100% auto;
+  background: url("images/backgrounds/haikei.jpg") no-repeat center center;
+  background-size: auto 100vh; /* スマホは縦ぴったり、PCは余白あり */
   background-color: white;
-  color: white;
   min-height: 100vh;
-  overflow-x: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
-h1 {
-  margin-top: 20px;
-  font-size: 1.5em;
-}
-
-/* スタンプボード（枠線なし） */
 .stamp-board {
   position: relative;
   width: 100%;
-  max-width: 420px;
-  margin: 30px auto;
-  height: 600px; /* ドラッグ領域を確保 */
+  height: 100vh;
 }
 
-/* スタンプ */
+.stamp {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+}
+
 .stamp img {
-  width: 90px;
+  width: 100%;
   height: auto;
-  transition: transform 0.2s ease;
-  cursor: grab;
 }
 
-.got img {
-  opacity: 0.6;
-  transform: scale(0.95);
-}
-
-/* コンプリートメッセージ */
-#complete-message {
-  color: yellow;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-/* リセットボタン */
-#reset-button, #reset {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: white;
-  color: black;
-  border: 2px solid #333;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 100;
-}
-
-#reset-button:hover, #reset:hover {
-  background: #eee;
-}
-
-/* 開発版用出力エリア */
-pre {
-  text-align: left;
-  background: #f5f5f5;
-  padding: 10px;
-  border-radius: 6px;
-  width: 80%;
-  margin: 10px auto;
-  overflow-x: auto;
-}
-
-.buttons {
-  margin: 10px;
+@media (max-width: 600px) {
+  .stamp {
+    width: 60px;
+    height: 60px;
+  }
 }

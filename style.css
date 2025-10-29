@@ -1,30 +1,61 @@
 body {
-  font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
+  text-align: center;
   margin: 0;
   padding: 0;
-  text-align: center;
-  background: white;
+  background: #fff;
 }
 
-.index-page {
-  background: url("images/backgrounds/haikei.jpg") no-repeat center center;
-  background-size: auto 100vh; /* スマホは縦ぴったり、PCは余白あり */
-  background-color: white;
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
+h1 {
+  font-size: 1.4rem;
+  margin: 15px 0;
 }
 
 .stamp-board {
   position: relative;
   width: 100%;
-  height: 100vh;
+  max-width: 450px; /* スマホでは幅いっぱい、PCでは中央寄せ */
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* PC用に中央に余白を作る */
+@media (min-width: 768px) {
+  body {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stamp-board {
+    max-width: 450px;
+    height: 100vh;
+    border-left: 80px solid white;
+    border-right: 80px solid white;
+  }
+
+  .background {
+    height: 100vh;
+    width: auto;
+  }
 }
 
 .stamp {
   position: absolute;
   width: 80px;
   height: 80px;
+  transition: transform 0.3s ease;
 }
 
 .stamp img {
@@ -32,9 +63,29 @@ body {
   height: auto;
 }
 
-@media (max-width: 600px) {
-  .stamp {
-    width: 60px;
-    height: 60px;
-  }
+.stamp.collected img {
+  opacity: 0.4;
+  filter: grayscale(100%);
+}
+
+#reset-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#reset-button:hover {
+  background-color: #005fa3;
+}
+
+#complete-message {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #d14;
 }

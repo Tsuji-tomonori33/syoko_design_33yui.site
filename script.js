@@ -7,6 +7,7 @@ const stampPositions = {
   "stamp5": { "left": 60, "top": 20, "width": 12 }
 };
 
+// スタンプの絶対位置・サイズを適用
 function applyStampPositions() {
   const bg = document.querySelector(".background");
   const bgWidth = bg.clientWidth;
@@ -22,6 +23,7 @@ function applyStampPositions() {
   }
 }
 
+// スタンプ状態を反映
 function loadStamps() {
   for (let i = 1; i <= 5; i++) {
     const stamp = document.getElementById("stamp"+i);
@@ -32,21 +34,27 @@ function loadStamps() {
   checkCompletion();
 }
 
+// 全スタンプ獲得チェック
 function checkCompletion() {
   const allCollected = Array.from(document.querySelectorAll(".stamp"))
     .every(stamp => stamp.classList.contains("collected"));
   document.getElementById("complete-message").style.display = allCollected ? "block" : "none";
 }
 
-// 完全版ではクリックで消えないのでクリックイベント削除
+// 完全版ではクリックで消えないようにイベント削除
 
+// リセットボタン
 document.getElementById("reset-button").addEventListener("click", () => {
   if (!confirm("本当に全てのスタンプをリセットしますか？")) return;
-  for (let i=1;i<=5;i++) localStorage.removeItem("stamp"+i);
+  for (let i = 1; i <= 5; i++) localStorage.removeItem("stamp"+i);
   loadStamps();
 });
 
+// 初期化
 window.addEventListener("DOMContentLoaded", () => {
   applyStampPositions();
   loadStamps();
 });
+
+// ウィンドウリサイズ時もスタンプを再配置
+window.addEventListener("resize", applyStampPositions);

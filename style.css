@@ -2,68 +2,44 @@ body {
   font-family: "Noto Sans JP", sans-serif;
   margin: 0;
   padding: 0;
-  text-align: center;
-  background: #fff;
-  height: 100vh;
+  background-color: #fff;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+}
+
+.index-page {
+  width: 100%;
 }
 
 .stamp-board {
   position: relative;
   width: 100%;
   max-width: 600px;
-  height: 100%;
+  margin: 20px auto;
+  height: auto;
   display: flex;
   justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  margin: 0 auto;
+  align-items: flex-start;
 }
 
 .background {
-  position: absolute;
   width: 100%;
-  height: 100%;
-  object-fit: contain;           /* 縦横比を保持 */
-  object-position: center center; /* 中央揃え */
-  pointer-events: none;
+  height: auto;
+  object-fit: contain;
+  object-position: center top;
+  position: absolute;
   z-index: 0;
+  pointer-events: none;
 }
 
 .stamp {
   position: absolute;
-  display: none;
+  cursor: default; /* ユーザーはドラッグ不可 */
   z-index: 1;
 }
 
 .stamp img {
-  width: 100%;
+  width: 120px; /* 開発版で設定したサイズを反映 */
   height: auto;
-}
-
-.stamp.collected {
-  display: block;
-}
-
-#complete-message {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #d14;
-}
-
-#reset-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #0078d7;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-#reset-button:hover {
-  background-color: #005fa3;
 }

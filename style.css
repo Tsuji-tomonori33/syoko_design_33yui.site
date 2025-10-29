@@ -34,6 +34,7 @@ body {
 .stamp {
   position: absolute;
   z-index: 1;
+  display: none; /* 初期非表示 */
 }
 
 .stamp img {

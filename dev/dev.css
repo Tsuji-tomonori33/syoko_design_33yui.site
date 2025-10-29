@@ -11,23 +11,23 @@ body {
 .stamp-board {
   position: relative;
   width: 100%;
-  max-width: 1000px;     /* 背景画像を大きく表示 */
+  max-width: 600px;           /* 完全版と同じ幅 */
   margin: 20px auto;
-  height: auto;           /* 高さ自動 */
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  overflow: visible;      /* 下部も表示 */
+  overflow: visible;          /* 下部も表示 */
 }
 
 .background {
   width: 100%;
   height: auto;
-  object-fit: contain;           /* 縦横比を保持 */
-  object-position: center top;   /* 上寄せ + 横中央 */
-  pointer-events: none;
+  object-fit: contain;        /* 縦横比保持 */
+  object-position: center top;
   position: absolute;
   z-index: 0;
+  pointer-events: none;
 }
 
 .stamp {
@@ -37,7 +37,7 @@ body {
 }
 
 .stamp img {
-  width: 12%;   /* 初期サイズ */
+  width: 80px;   /* 初期大きさ */
   height: auto;
 }
 

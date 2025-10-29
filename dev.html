@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>スタンプ位置設定（開発版）</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .output-box {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="index-page">
+  <div class="stamp-board">
+    <div class="stamp" id="stamp1"><img src="images/stamps/stamp1.png" alt="stamp1"></div>
+    <div class="stamp" id="stamp2"><img src="images/stamps/stamp2.png" alt="stamp2"></div>
+    <div class="stamp" id="stamp3"><img src="images/stamps/stamp3.png" alt="stamp3"></div>
+    <div class="stamp" id="stamp4"><img src="images/stamps/stamp4.png" alt="stamp4"></div>
+    <div class="stamp" id="stamp5"><img src="images/stamps/stamp5.png" alt="stamp5"></div>
+  </div>
+
+  <div class="output-box">
+    <button id="export">座標を出力</button>
+    <pre id="output"></pre>
+  </div>
+
+  <script>
+    const stamps = document.querySelectorAll(".stamp");
+    let active = null;
+    let offset = { x: 0, y: 0 };
+
+    stamps.forEach(stamp => {
+      stamp.addEventListener("mousedown", e => {
+        active = stamp;
+        offset.x = e.offsetX;
+        offset.y = e.offsetY;
+      });
+
+      window.addEventListener("mousemove", e => {
+        if (!active) return;
+        const board = document.querySelector(".stamp-board");
+        const rect = board.getBoundingClientRect();
+        let left = e.clientX - rect.left - offset.x;
+        let top = e.clientY - rect.top - offset.y;
+        active.style.left = left + "px";
+        active.style.top = top + "px";
+      });
+
+      window.addEventListener("mouseup", () => (active = null));
+    });
+
+    document.getElementById("export").addEventListener("click", () => {
+      const result = {};
+      stamps.forEach(s => {
+        result[s.id] = {
+          left: s.style.left || "0px",
+          top: s.style.top || "0px"
+        };
+      });
+      document.getElementById("output").textContent = JSON.stringify(result, null, 2);
+    });
+  </script>
+</body>
+</html>

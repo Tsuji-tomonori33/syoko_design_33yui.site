@@ -1,60 +1,65 @@
-// 開発版で決めた座標とサイズ（％）
+const stampIds = ["stamp1","stamp2","stamp3","stamp4","stamp5"];
+const stampBoard = document.querySelector(".stamp-board");
+
+// 開発版で出力された固定座標（％）とサイズ（px）を反映
 const stampPositions = {
-  "stamp1": { "left": 10, "top": 15, "width": 12 },
-  "stamp2": { "left": 30, "top": 40, "width": 10 },
-  "stamp3": { "left": 50, "top": 60, "width": 15 },
-  "stamp4": { "left": 70, "top": 35, "width": 10 },
-  "stamp5": { "left": 60, "top": 20, "width": 12 }
+  "stamp1": { left: 5.5, top: 12, width: 120 },
+  "stamp2": { left: 0, top: 42, width: 120 },
+  "stamp3": { left: 20, top: 61, width: 120 },
+  "stamp4": { left: 53.5, top: 46, width: 120 },
+  "stamp5": { left: 46, top: 28, width: 120 }
 };
 
-// スタンプの絶対位置・サイズを適用
+// スタンプ配置
 function applyStampPositions() {
   const bg = document.querySelector(".background");
   const bgWidth = bg.clientWidth;
   const bgHeight = bg.clientHeight;
 
-  for (const [id, pos] of Object.entries(stampPositions)) {
+  stampIds.forEach(id => {
+    const pos = stampPositions[id];
     const stamp = document.getElementById(id);
-    if (stamp) {
-      stamp.style.left = `${(pos.left/100)*bgWidth}px`;
-      stamp.style.top = `${(pos.top/100)*bgHeight}px`;
-      stamp.style.width = `${(pos.width/100)*bgWidth}px`;
-    }
-  }
+    stamp.style.left = `${(pos.left/100)*bgWidth}px`;
+    stamp.style.top = `${(pos.top/100)*bgHeight}px`;
+    stamp.querySelector("img").style.width = `${pos.width}px`;
+  });
 }
 
-// スタンプ状態を反映
-function loadStamps() {
-  for (let i = 1; i <= 5; i++) {
-    const stamp = document.getElementById("stamp"+i);
-    const state = localStorage.getItem("stamp"+i);
-    if (state === "get") stamp.classList.add("collected");
-    else stamp.classList.remove("collected");
-  }
-  checkCompletion();
-}
-
-// 全スタンプ獲得チェック
-function checkCompletion() {
-  const allCollected = Array.from(document.querySelectorAll(".stamp"))
-    .every(stamp => stamp.classList.contains("collected"));
-  document.getElementById("complete-message").style.display = allCollected ? "block" : "none";
-}
-
-// 完全版ではクリックで消えないようにイベント削除
-
-// リセットボタン
-document.getElementById("reset-button").addEventListener("click", () => {
-  if (!confirm("本当に全てのスタンプをリセットしますか？")) return;
-  for (let i = 1; i <= 5; i++) localStorage.removeItem("stamp"+i);
-  loadStamps();
+// スタンプ押下（localStorageに反映）
+stampIds.forEach(id => {
+  const stamp = document.getElementById(id);
+  stamp.addEventListener("click", () => {
+    localStorage.setItem(id,"get");
+    applyStampGot();
+  });
 });
 
-// 初期化
+// スタンプ状態反映
+function applyStampGot() {
+  let complete = true;
+  stampIds.forEach(id => {
+    const stamp = document.getElementById(id).querySelector("img");
+    if (localStorage.getItem(id) === "get") {
+      stamp.style.opacity = 0.5; // 獲得済みは半透明
+    } else {
+      stamp.style.opacity = 1;
+      complete = false;
+    }
+  });
+  document.getElementById("complete-message").style.display = complete ? "block" : "none";
+}
+
+// リセット
+document.getElementById("reset-button").addEventListener("click", () => {
+  if (confirm("本当にリセットしますか？")) {
+    stampIds.forEach(id => localStorage.removeItem(id));
+    applyStampGot();
+  }
+});
+
 window.addEventListener("DOMContentLoaded", () => {
   applyStampPositions();
-  loadStamps();
+  applyStampGot();
 });
 
-// ウィンドウリサイズ時もスタンプを再配置
 window.addEventListener("resize", applyStampPositions);

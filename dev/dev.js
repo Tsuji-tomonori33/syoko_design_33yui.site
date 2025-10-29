@@ -1,58 +1,63 @@
-const stamps = document.querySelectorAll(".stamp");
-const sizeSlider = document.getElementById("size-slider");
+const stampIds = ["stamp1","stamp2","stamp3","stamp4","stamp5"];
+const stampBoard = document.querySelector(".stamp-board");
 
-// ドラッグ機能
-stamps.forEach(stamp => {
-  let isDragging = false;
-  let offsetX, offsetY;
+let dragged = null;
 
-  stamp.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    const rect = stamp.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-    stamp.style.cursor = "grabbing";
+// 初期配置（任意の座標）
+const stampPositions = {
+  "stamp1": { left: 10, top: 15 },
+  "stamp2": { left: 30, top: 40 },
+  "stamp3": { left: 50, top: 60 },
+  "stamp4": { left: 70, top: 35 },
+  "stamp5": { left: 60, top: 20 }
+};
+
+// スタンプを背景に対して配置
+function applyStampPositions() {
+  const bg = document.querySelector(".background");
+  const bgWidth = bg.clientWidth;
+  const bgHeight = bg.clientHeight;
+
+  stampIds.forEach(id => {
+    const pos = stampPositions[id];
+    const stamp = document.getElementById(id);
+    stamp.style.left = `${(pos.left/100)*bgWidth}px`;
+    stamp.style.top = `${(pos.top/100)*bgHeight}px`;
   });
+}
 
-  document.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    const board = document.querySelector(".stamp-board");
-    const boardRect = board.getBoundingClientRect();
-    let left = e.clientX - boardRect.left - offsetX;
-    let top = e.clientY - boardRect.top - offsetY;
-
-    left = Math.max(0, Math.min(left, boardRect.width - stamp.offsetWidth));
-    top = Math.max(0, Math.min(top, boardRect.height - stamp.offsetHeight));
-
-    stamp.style.left = left + "px";
-    stamp.style.top = top + "px";
-  });
-
-  document.addEventListener("mouseup", () => {
-    if (isDragging) {
-      isDragging = false;
-      stamp.style.cursor = "grab";
-    }
+// ドラッグ開始
+stampIds.forEach(id => {
+  const stamp = document.getElementById(id);
+  stamp.addEventListener("dragstart", e => {
+    dragged = stamp;
   });
 });
 
-// スライダーで全スタンプの大きさ変更
-sizeSlider.addEventListener("input", () => {
-  const sizePercent = sizeSlider.value + "%";
-  stamps.forEach(stamp => {
-    stamp.style.width = sizePercent;
-  });
+// ドロップ
+stampBoard.addEventListener("dragover", e => e.preventDefault());
+stampBoard.addEventListener("drop", e => {
+  e.preventDefault();
+  if (!dragged) return;
+  const rect = stampBoard.getBoundingClientRect();
+  const bg = document.querySelector(".background");
+  const bgWidth = bg.clientWidth;
+  const bgHeight = bg.clientHeight;
+
+  // 相対座標を％で保存
+  const leftPercent = ((e.clientX - rect.left - dragged.offsetWidth/2) / bgWidth) * 100;
+  const topPercent = ((e.clientY - rect.top - dragged.offsetHeight/2) / bgHeight) * 100;
+
+  stampPositions[dragged.id] = { left: leftPercent, top: topPercent };
+  applyStampPositions();
+  dragged = null;
 });
 
-// JSON出力
-document.getElementById("export").addEventListener("click", () => {
-  const data = {};
-  stamps.forEach(stamp => {
-    data[stamp.id] = {
-      left: stamp.style.left,
-      top: stamp.style.top,
-      width: stamp.style.width
-    };
-  });
-  document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+// 出力ボタン
+document.getElementById("output-button").addEventListener("click", () => {
+  const jsonOutput = JSON.stringify(stampPositions, null, 2);
+  document.getElementById("json-output").textContent = jsonOutput;
 });
+
+window.addEventListener("DOMContentLoaded", applyStampPositions);
+window.addEventListener("resize", applyStampPositions);

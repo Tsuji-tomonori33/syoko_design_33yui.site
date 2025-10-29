@@ -1,19 +1,20 @@
-// スタンプ位置データ
+// 開発版で決めた座標とサイズ（相対％）
 const stampPositions = {
-  "stamp1": { "left": "10%", "top": "15%" },
-  "stamp2": { "left": "30%", "top": "40%" },
-  "stamp3": { "left": "50%", "top": "60%" },
-  "stamp4": { "left": "70%", "top": "35%" },
-  "stamp5": { "left": "60%", "top": "20%" }
+  "stamp1": { "left": "10%", "top": "15%", "width": "12%" },
+  "stamp2": { "left": "30%", "top": "40%", "width": "10%" },
+  "stamp3": { "left": "50%", "top": "60%", "width": "15%" },
+  "stamp4": { "left": "70%", "top": "35%", "width": "10%" },
+  "stamp5": { "left": "60%", "top": "20%", "width": "12%" }
 };
 
-// スタンプ位置反映
+// スタンプ位置とサイズを適用
 function applyStampPositions() {
   for (const [id, pos] of Object.entries(stampPositions)) {
     const stamp = document.getElementById(id);
     if (stamp) {
       stamp.style.left = pos.left;
       stamp.style.top = pos.top;
+      stamp.style.width = pos.width;
     }
   }
 }
@@ -40,7 +41,7 @@ function checkCompletion() {
     allCollected ? "block" : "none";
 }
 
-// スタンプクリック（手動切替）
+// スタンプクリックで手動獲得切替
 document.querySelectorAll(".stamp").forEach(stamp => {
   stamp.addEventListener("click", () => {
     const id = stamp.id;

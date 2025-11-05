@@ -1,4 +1,4 @@
-// 開発版で調整した値（比率で統一）
+// 開発版で取得した座標データを反映
 const stampData = {
   stamp1: { left: 11.5, top: 19.95, size: 15 },
   stamp2: { left: 64.67, top: 23.84, size: 15 },
@@ -7,9 +7,9 @@ const stampData = {
   stamp5: { left: 13.83, top: 75.19, size: 15 },
 };
 
-// スタンプ生成処理
 const stampsContainer = document.getElementById("stamps");
 
+// 各スタンプを生成
 Object.keys(stampData).forEach(id => {
   const img = document.createElement("img");
   const isGot = localStorage.getItem(id) === "got";
@@ -18,26 +18,22 @@ Object.keys(stampData).forEach(id => {
     : `images/stamps/${id}.png`;
   img.id = id;
   img.className = "stamp";
-
-  // 開発版の比率データをそのまま反映
-  const data = stampData[id];
-  img.style.left = data.left + "%";
-  img.style.top = data.top + "%";
-  img.style.width = data.size + "%";
+  img.style.left = stampData[id].left + "%";
+  img.style.top = stampData[id].top + "%";
+  img.style.width = stampData[id].size + "%";
+  if (isGot) img.classList.add("visible");
 
   stampsContainer.appendChild(img);
 });
 
-// スタンプがすべて揃ったらメッセージ表示
+// コンプリート判定
 function checkCompletion() {
   const allGot = Object.keys(stampData).every(
     id => localStorage.getItem(id) === "got"
   );
-  if (allGot) {
-    document.getElementById("complete-message").style.display = "block";
-  } else {
-    document.getElementById("complete-message").style.display = "none";
-  }
+  document.getElementById("complete-message").style.display = allGot
+    ? "block"
+    : "none";
 }
 checkCompletion();
 

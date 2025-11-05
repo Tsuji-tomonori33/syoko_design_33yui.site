@@ -16,7 +16,7 @@ h1 {
   display: inline-block;
   width: 90vw;
   max-width: 600px;
-  aspect-ratio: 3 / 4; /* 背景比率固定 */
+  aspect-ratio: 3 / 4;
   margin: 10px auto;
   overflow: hidden;
   border: 2px dashed #aaa;
@@ -39,16 +39,30 @@ h1 {
 }
 
 /* スタンプ共通設定 */
-.stamp {
+.stamp-wrapper {
   position: absolute;
-  width: 18%; /* 背景に対する比率 */
+  width: 18%; /* 初期サイズ */
   cursor: move;
-  opacity: 0.9;
-  transition: transform 0.2s ease;
+  border: 1px dashed rgba(0,0,0,0.3);
 }
 
-.stamp:hover {
-  transform: scale(1.1);
+.stamp-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+/* サイズ調整用のリサイズハンドル */
+.resize-handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 16px;
+  height: 16px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 3px;
+  cursor: se-resize;
 }
 
 /* ボタン類 */

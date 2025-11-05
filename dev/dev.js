@@ -1,7 +1,6 @@
 const stampsContainer = document.getElementById("stamps");
 const output = document.getElementById("output");
 const zoomSlider = document.getElementById("zoom-slider");
-const sizeSlider = document.getElementById("size-slider");
 
 let selectedStamp = null;
 
@@ -15,44 +14,52 @@ const stampData = {
 
 // === スタンプ生成 ===
 Object.keys(stampData).forEach(id => {
+  const wrapper = document.createElement("div");
+  wrapper.className = "stamp";
+  wrapper.id = id;
+  wrapper.style.left = stampData[id].left + "%";
+  wrapper.style.top = stampData[id].top + "%";
+  wrapper.style.width = stampData[id].size + "%";
+
   const img = document.createElement("img");
   img.src = `../images/stamps/${id}.png`;
-  img.id = id;
-  img.className = "stamp";
-  img.style.left = stampData[id].left + "%";
-  img.style.top = stampData[id].top + "%";
-  img.style.width = stampData[id].size + "%";
-  stampsContainer.appendChild(img);
+  img.draggable = false;
+  img.style.width = "100%";
+  img.style.height = "auto";
 
-  makeDraggable(img);
-  img.addEventListener("click", () => selectStamp(img));
+  const resizer = document.createElement("div");
+  resizer.className = "resizer";
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(resizer);
+  stampsContainer.appendChild(wrapper);
+
+  makeDraggable(wrapper);
+  makeResizable(wrapper, resizer);
+
+  wrapper.addEventListener("click", (e) => {
+    e.stopPropagation();
+    selectStamp(wrapper);
+  });
 });
 
-function selectStamp(img) {
+function selectStamp(stamp) {
   document.querySelectorAll(".stamp").forEach(s => s.classList.remove("selected"));
-  img.classList.add("selected");
-  selectedStamp = img;
-  sizeSlider.value = parseFloat(img.style.width);
+  stamp.classList.add("selected");
+  selectedStamp = stamp;
+  updateOutput();
 }
 
-// === サイズ変更 ===
-sizeSlider.addEventListener("input", () => {
-  if (selectedStamp) {
-    selectedStamp.style.width = sizeSlider.value + "%";
-    updateOutput();
-  }
-});
-
-// === ドラッグ操作 ===
-function makeDraggable(element) {
+// === ドラッグ移動 ===
+function makeDraggable(el) {
   let offsetX, offsetY;
-
-  element.addEventListener("mousedown", startDrag);
-  element.addEventListener("touchstart", startDrag);
+  el.addEventListener("mousedown", startDrag);
+  el.addEventListener("touchstart", startDrag);
 
   function startDrag(e) {
+    if (e.target.classList.contains("resizer")) return;
     e.preventDefault();
-    const rect = element.getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
     const containerRect = stampsContainer.getBoundingClientRect();
     offsetX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
     offsetY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
@@ -70,9 +77,8 @@ function makeDraggable(element) {
     const leftPercent = (x / containerRect.width) * 100;
     const topPercent = (y / containerRect.height) * 100;
 
-    element.style.left = leftPercent + "%";
-    element.style.top = topPercent + "%";
-
+    el.style.left = `${leftPercent}%`;
+    el.style.top = `${topPercent}%`;
     updateOutput();
   }
 
@@ -84,20 +90,54 @@ function makeDraggable(element) {
   }
 }
 
+// === サイズ変更 ===
+function makeResizable(el, resizer) {
+  let startX, startWidth;
+
+  resizer.addEventListener("mousedown", startResize);
+  resizer.addEventListener("touchstart", startResize);
+
+  function startResize(e) {
+    e.preventDefault();
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    startWidth = parseFloat(el.style.width);
+
+    document.addEventListener("mousemove", resize);
+    document.addEventListener("mouseup", stopResize);
+    document.addEventListener("touchmove", resize);
+    document.addEventListener("touchend", stopResize);
+  }
+
+  function resize(e) {
+    const moveX = (e.touches ? e.touches[0].clientX : e.clientX) - startX;
+    const containerRect = stampsContainer.getBoundingClientRect();
+    const deltaPercent = (moveX / containerRect.width) * 100;
+    el.style.width = `${Math.max(5, startWidth + deltaPercent)}%`;
+    updateOutput();
+  }
+
+  function stopResize() {
+    document.removeEventListener("mousemove", resize);
+    document.removeEventListener("mouseup", stopResize);
+    document.removeEventListener("touchmove", resize);
+    document.removeEventListener("touchend", stopResize);
+  }
+}
+
 // === ズーム ===
 zoomSlider.addEventListener("input", () => {
   const scale = zoomSlider.value / 100;
   document.getElementById("card-container").style.transform = `scale(${scale})`;
 });
 
-// === 出力 ===
+// === 出力更新 ===
 function updateOutput() {
   const data = {};
   document.querySelectorAll(".stamp").forEach(stamp => {
     data[stamp.id] = {
       left: parseFloat(stamp.style.left),
       top: parseFloat(stamp.style.top),
-      size: parseFloat(stamp.style.width)
+      size: parseFloat(stamp.style.width),
     };
   });
   output.textContent = JSON.stringify(data, null, 2);
@@ -108,4 +148,10 @@ updateOutput();
 document.getElementById("export").addEventListener("click", () => {
   navigator.clipboard.writeText(output.textContent);
   alert("📋 座標をコピーしました！");
+});
+
+// 背景クリックで選択解除
+document.getElementById("card-container").addEventListener("click", () => {
+  document.querySelectorAll(".stamp").forEach(s => s.classList.remove("selected"));
+  selectedStamp = null;
 });

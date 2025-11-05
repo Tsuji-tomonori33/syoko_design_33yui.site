@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>獅子島スタンプラリー（開発版）</title>
+  <title>獅子島スタンプラリー</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="index-page">
@@ -11,18 +11,15 @@
   <div class="card-container">
     <img src="images/backgrounds/card_background.png" alt="スタンプカード" class="background">
 
-    <!-- スタンプ -->
-    <img id="stamp1" class="stamp draggable" src="images/stamps/stamp1.png" alt="スタンプ1">
-    <img id="stamp2" class="stamp draggable" src="images/stamps/stamp2.png" alt="スタンプ2">
-    <img id="stamp3" class="stamp draggable" src="images/stamps/stamp3.png" alt="スタンプ3">
-    <img id="stamp4" class="stamp draggable" src="images/stamps/stamp4.png" alt="スタンプ4">
-    <img id="stamp5" class="stamp draggable" src="images/stamps/stamp5.png" alt="スタンプ5">
+    <!-- スタンプは script.js で押印時に生成 -->
+    <div id="stamps"></div>
   </div>
 
-  <div class="controls">
-    <button id="reset-button">🔄 位置をリセット</button>
-    <p>💡 スタンプをドラッグで動かせます（縦横比固定）</p>
-  </div>
+  <p id="complete-message" style="display:none;">
+    🎉 全スタンプコンプリート！おめでとうございます！ 🎉
+  </p>
+
+  <button id="reset-button">🔄 スタンプをリセット</button>
 
   <script src="script.js"></script>
 </body>

@@ -1,149 +1,111 @@
-// ===== スタンプ初期位置・サイズ（%単位） =====
-const initialPositions = {
-  stamp1: { left: 11.5, top: 19.95, width: 18 },
-  stamp2: { left: 64.67, top: 23.84, width: 18 },
-  stamp3: { left: 26, top: 42.31, width: 18 },
-  stamp4: { left: 65.17, top: 53.28, width: 18 },
-  stamp5: { left: 13.83, top: 75.19, width: 18 }
+const stampsContainer = document.getElementById("stamps");
+const output = document.getElementById("output");
+const zoomSlider = document.getElementById("zoom-slider");
+const sizeSlider = document.getElementById("size-slider");
+
+let selectedStamp = null;
+
+const stampData = {
+  stamp1: { left: 11.5, top: 19.95, size: 15 },
+  stamp2: { left: 64.67, top: 23.84, size: 15 },
+  stamp3: { left: 26, top: 42.31, size: 15 },
+  stamp4: { left: 65.17, top: 53.28, size: 15 },
+  stamp5: { left: 13.83, top: 75.19, size: 15 },
 };
 
-window.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector(".card-container");
-  const stamps = document.querySelectorAll(".stamp-wrapper");
-  const resetBtn = document.getElementById("reset");
-  const logBtn = document.getElementById("log");
-  const output = document.getElementById("output");
+// === スタンプ生成 ===
+Object.keys(stampData).forEach(id => {
+  const img = document.createElement("img");
+  img.src = `../images/stamps/${id}.png`;
+  img.id = id;
+  img.className = "stamp";
+  img.style.left = stampData[id].left + "%";
+  img.style.top = stampData[id].top + "%";
+  img.style.width = stampData[id].size + "%";
+  stampsContainer.appendChild(img);
 
-  // ===== 初期化 =====
-  stamps.forEach(stamp => {
-    const id = stamp.id;
-    const pos = initialPositions[id];
-    stamp.style.left = `${pos.left}%`;
-    stamp.style.top = `${pos.top}%`;
-    stamp.style.width = `${pos.width}%`;
+  makeDraggable(img);
+  img.addEventListener("click", () => selectStamp(img));
+});
 
-    // サイズ変更ハンドル追加
-    const handle = document.createElement("div");
-    handle.className = "resize-handle";
-    stamp.appendChild(handle);
-  });
+function selectStamp(img) {
+  document.querySelectorAll(".stamp").forEach(s => s.classList.remove("selected"));
+  img.classList.add("selected");
+  selectedStamp = img;
+  sizeSlider.value = parseFloat(img.style.width);
+}
 
-  // ===== ドラッグ移動 =====
-  let activeStamp = null;
-  let offsetX = 0, offsetY = 0;
-  let mode = "move"; // "move" or "resize"
-  let startWidth = 0;
-  let startX = 0;
-  let startY = 0;
+// === サイズ変更 ===
+sizeSlider.addEventListener("input", () => {
+  if (selectedStamp) {
+    selectedStamp.style.width = sizeSlider.value + "%";
+    updateOutput();
+  }
+});
 
-  stamps.forEach(stamp => {
-    const handle = stamp.querySelector(".resize-handle");
+// === ドラッグ操作 ===
+function makeDraggable(element) {
+  let offsetX, offsetY;
 
-    // 位置移動
-    stamp.addEventListener("mousedown", e => {
-      if (e.target.classList.contains("resize-handle")) return;
-      e.preventDefault();
-      startMove(e, stamp);
-    });
-    stamp.addEventListener("touchstart", e => {
-      if (e.target.classList.contains("resize-handle")) return;
-      e.preventDefault();
-      startMove(e.touches[0], stamp);
-    });
+  element.addEventListener("mousedown", startDrag);
+  element.addEventListener("touchstart", startDrag);
 
-    // サイズ変更
-    handle.addEventListener("mousedown", e => {
-      e.preventDefault();
-      startResize(e, stamp);
-    });
-    handle.addEventListener("touchstart", e => {
-      e.preventDefault();
-      startResize(e.touches[0], stamp);
-    });
-  });
+  function startDrag(e) {
+    e.preventDefault();
+    const rect = element.getBoundingClientRect();
+    const containerRect = stampsContainer.getBoundingClientRect();
+    offsetX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    offsetY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
 
-  function startMove(e, stamp) {
-    mode = "move";
-    activeStamp = stamp;
-    const rect = container.getBoundingClientRect();
-    const sRect = stamp.getBoundingClientRect();
-    offsetX = e.clientX - sRect.left;
-    offsetY = e.clientY - sRect.top;
-
-    document.addEventListener("mousemove", onDrag);
-    document.addEventListener("mouseup", endDrag);
-    document.addEventListener("touchmove", onDrag, { passive: false });
-    document.addEventListener("touchend", endDrag);
+    document.addEventListener("mousemove", drag);
+    document.addEventListener("mouseup", stopDrag);
+    document.addEventListener("touchmove", drag);
+    document.addEventListener("touchend", stopDrag);
   }
 
-  function startResize(e, stamp) {
-    mode = "resize";
-    activeStamp = stamp;
-    const rect = container.getBoundingClientRect();
-    startWidth = stamp.getBoundingClientRect().width;
-    startX = e.clientX;
-    startY = e.clientY;
+  function drag(e) {
+    const containerRect = stampsContainer.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - containerRect.left - offsetX;
+    const y = (e.touches ? e.touches[0].clientY : e.clientY) - containerRect.top - offsetY;
+    const leftPercent = (x / containerRect.width) * 100;
+    const topPercent = (y / containerRect.height) * 100;
 
-    document.addEventListener("mousemove", onDrag);
-    document.addEventListener("mouseup", endDrag);
-    document.addEventListener("touchmove", onDrag, { passive: false });
-    document.addEventListener("touchend", endDrag);
+    element.style.left = leftPercent + "%";
+    element.style.top = topPercent + "%";
+
+    updateOutput();
   }
 
-  function onDrag(e) {
-    if (!activeStamp) return;
-    const event = e.touches ? e.touches[0] : e;
-    const rect = container.getBoundingClientRect();
-
-    if (mode === "move") {
-      let left = ((event.clientX - rect.left - offsetX) / rect.width) * 100;
-      let top = ((event.clientY - rect.top - offsetY) / rect.height) * 100;
-      left = Math.max(0, Math.min(90, left));
-      top = Math.max(0, Math.min(90, top));
-      activeStamp.style.left = `${left}%`;
-      activeStamp.style.top = `${top}%`;
-    } else if (mode === "resize") {
-      const dx = event.clientX - startX;
-      const dy = event.clientY - startY;
-      const dist = Math.max(dx, dy);
-      const deltaPercent = (dist / rect.width) * 100;
-      let newWidth = startWidth / rect.width * 100 + deltaPercent;
-      newWidth = Math.max(5, Math.min(50, newWidth));
-      activeStamp.style.width = `${newWidth}%`;
-    }
+  function stopDrag() {
+    document.removeEventListener("mousemove", drag);
+    document.removeEventListener("mouseup", stopDrag);
+    document.removeEventListener("touchmove", drag);
+    document.removeEventListener("touchend", stopDrag);
   }
+}
 
-  function endDrag() {
-    activeStamp = null;
-    document.removeEventListener("mousemove", onDrag);
-    document.removeEventListener("mouseup", endDrag);
-    document.removeEventListener("touchmove", onDrag);
-    document.removeEventListener("touchend", endDrag);
-  }
+// === ズーム ===
+zoomSlider.addEventListener("input", () => {
+  const scale = zoomSlider.value / 100;
+  document.getElementById("card-container").style.transform = `scale(${scale})`;
+});
 
-  // ===== 出力 =====
-  logBtn.addEventListener("click", () => {
-    const result = {};
-    stamps.forEach(stamp => {
-      const id = stamp.id;
-      const left = parseFloat(stamp.style.left);
-      const top = parseFloat(stamp.style.top);
-      const width = parseFloat(stamp.style.width);
-      result[id] = { left, top, width };
-    });
-    const text = JSON.stringify(result, null, 2);
-    output.textContent = text;
-    console.log("📋 現在のスタンプ位置・サイズ:\n", text);
+// === 出力 ===
+function updateOutput() {
+  const data = {};
+  document.querySelectorAll(".stamp").forEach(stamp => {
+    data[stamp.id] = {
+      left: parseFloat(stamp.style.left),
+      top: parseFloat(stamp.style.top),
+      size: parseFloat(stamp.style.width)
+    };
   });
+  output.textContent = JSON.stringify(data, null, 2);
+}
+updateOutput();
 
-  // ===== リセット =====
-  resetBtn.addEventListener("click", () => {
-    stamps.forEach(stamp => {
-      const pos = initialPositions[stamp.id];
-      stamp.style.left = `${pos.left}%`;
-      stamp.style.top = `${pos.top}%`;
-      stamp.style.width = `${pos.width}%`;
-    });
-    output.textContent = "";
-  });
+// === コピー ===
+document.getElementById("export").addEventListener("click", () => {
+  navigator.clipboard.writeText(output.textContent);
+  alert("📋 座標をコピーしました！");
 });

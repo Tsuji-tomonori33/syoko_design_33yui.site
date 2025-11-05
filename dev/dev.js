@@ -1,16 +1,19 @@
-// スタンプ初期設定（位置とサイズは仮）
+const stampsContainer = document.getElementById("stamps");
+const output = document.getElementById("output");
+const zoomSlider = document.getElementById("zoom-slider");
+const sizeSlider = document.getElementById("size-slider");
+
+let selectedStamp = null;
+
 const stampData = {
-  stamp1: { left: 20, top: 20, size: 15 },
-  stamp2: { left: 50, top: 30, size: 15 },
-  stamp3: { left: 30, top: 60, size: 15 },
-  stamp4: { left: 70, top: 50, size: 15 },
-  stamp5: { left: 80, top: 75, size: 15 },
+  stamp1: { left: 11.5, top: 19.95, size: 15 },
+  stamp2: { left: 64.67, top: 23.84, size: 15 },
+  stamp3: { left: 26, top: 42.31, size: 15 },
+  stamp4: { left: 65.17, top: 53.28, size: 15 },
+  stamp5: { left: 13.83, top: 75.19, size: 15 },
 };
 
-const card = document.getElementById("card");
-const stampsContainer = document.getElementById("stamps");
-
-// スタンプを生成
+// === スタンプ生成 ===
 Object.keys(stampData).forEach(id => {
   const img = document.createElement("img");
   img.src = `../images/stamps/${id}.png`;
@@ -19,102 +22,90 @@ Object.keys(stampData).forEach(id => {
   img.style.left = stampData[id].left + "%";
   img.style.top = stampData[id].top + "%";
   img.style.width = stampData[id].size + "%";
-
-  // リサイズハンドル
-  const handle = document.createElement("div");
-  handle.className = "resize-handle";
-  img.appendChild(handle);
-
   stampsContainer.appendChild(img);
 
-  makeDraggableAndResizable(img);
+  makeDraggable(img);
+  img.addEventListener("click", () => selectStamp(img));
 });
 
-function makeDraggableAndResizable(el) {
-  let isDragging = false;
-  let isResizing = false;
-  let startX, startY, startWidth, startHeight, startLeft, startTop;
-
-  const handle = el.querySelector(".resize-handle");
-
-  el.addEventListener("mousedown", e => {
-    if (e.target === handle) return;
-    isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    const rect = el.getBoundingClientRect();
-    const parentRect = card.getBoundingClientRect();
-    startLeft = ((rect.left - parentRect.left) / parentRect.width) * 100;
-    startTop = ((rect.top - parentRect.top) / parentRect.height) * 100;
-    e.preventDefault();
-  });
-
-  handle.addEventListener("mousedown", e => {
-    e.stopPropagation();
-    isResizing = true;
-    startX = e.clientX;
-    const rect = el.getBoundingClientRect();
-    const parentRect = card.getBoundingClientRect();
-    startWidth = (rect.width / parentRect.width) * 100;
-    e.preventDefault();
-  });
-
-  document.addEventListener("mousemove", e => {
-    const parentRect = card.getBoundingClientRect();
-
-    if (isDragging) {
-      const dx = ((e.clientX - startX) / parentRect.width) * 100;
-      const dy = ((e.clientY - startY) / parentRect.height) * 100;
-      el.style.left = startLeft + dx + "%";
-      el.style.top = startTop + dy + "%";
-    }
-
-    if (isResizing) {
-      const dw = ((e.clientX - startX) / parentRect.width) * 100;
-      el.style.width = startWidth + dw + "%";
-    }
-  });
-
-  document.addEventListener("mouseup", () => {
-    if (isDragging || isResizing) updateOutput();
-    isDragging = false;
-    isResizing = false;
-  });
+function selectStamp(img) {
+  document.querySelectorAll(".stamp").forEach(s => s.classList.remove("selected"));
+  img.classList.add("selected");
+  selectedStamp = img;
+  sizeSlider.value = parseFloat(img.style.width);
 }
 
-// 📋 現在の配置情報を出力
+// === サイズ変更 ===
+sizeSlider.addEventListener("input", () => {
+  if (selectedStamp) {
+    selectedStamp.style.width = sizeSlider.value + "%";
+    updateOutput();
+  }
+});
+
+// === ドラッグ操作 ===
+function makeDraggable(element) {
+  let offsetX, offsetY;
+
+  element.addEventListener("mousedown", startDrag);
+  element.addEventListener("touchstart", startDrag);
+
+  function startDrag(e) {
+    e.preventDefault();
+    const rect = element.getBoundingClientRect();
+    const containerRect = stampsContainer.getBoundingClientRect();
+    offsetX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    offsetY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+
+    document.addEventListener("mousemove", drag);
+    document.addEventListener("mouseup", stopDrag);
+    document.addEventListener("touchmove", drag);
+    document.addEventListener("touchend", stopDrag);
+  }
+
+  function drag(e) {
+    const containerRect = stampsContainer.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - containerRect.left - offsetX;
+    const y = (e.touches ? e.touches[0].clientY : e.clientY) - containerRect.top - offsetY;
+    const leftPercent = (x / containerRect.width) * 100;
+    const topPercent = (y / containerRect.height) * 100;
+
+    element.style.left = leftPercent + "%";
+    element.style.top = topPercent + "%";
+
+    updateOutput();
+  }
+
+  function stopDrag() {
+    document.removeEventListener("mousemove", drag);
+    document.removeEventListener("mouseup", stopDrag);
+    document.removeEventListener("touchmove", drag);
+    document.removeEventListener("touchend", stopDrag);
+  }
+}
+
+// === ズーム ===
+zoomSlider.addEventListener("input", () => {
+  const scale = zoomSlider.value / 100;
+  document.getElementById("card-container").style.transform = `scale(${scale})`;
+});
+
+// === 出力 ===
 function updateOutput() {
-  const cardRect = card.getBoundingClientRect();
   const data = {};
-
-  document.querySelectorAll(".stamp").forEach(el => {
-    const rect = el.getBoundingClientRect();
-    const parentRect = card.getBoundingClientRect();
-
-    const id = el.id;
-    data[id] = {
-      left: ((rect.left - parentRect.left + rect.width / 2) / parentRect.width) * 100,
-      top: ((rect.top - parentRect.top + rect.height / 2) / parentRect.height) * 100,
-      size: (rect.width / parentRect.width) * 100
+  document.querySelectorAll(".stamp").forEach(stamp => {
+    data[stamp.id] = {
+      left: parseFloat(stamp.style.left),
+      top: parseFloat(stamp.style.top),
+      size: parseFloat(stamp.style.width)
     };
   });
-
-  document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+  output.textContent = JSON.stringify(data, null, 2);
 }
-
 updateOutput();
 
-// 🔄 リセット
-document.getElementById("reset-btn").addEventListener("click", () => {
-  Object.keys(stampData).forEach(id => {
-    const el = document.getElementById(id);
-    const data = stampData[id];
-    el.style.left = data.left + "%";
-    el.style.top = data.top + "%";
-    el.style.width = data.size + "%";
-  });
-  updateOutput();
+// === コピー ===
+document.getElementById("export").addEventListener("click", () => {
+  navigator.clipboard.writeText(output.textContent);
+  alert("📋 座標をコピーしました！");
 });
-
-// 📋 出力ボタン
-document.getElementById("export-btn").addEventListener("click", updateOutput);

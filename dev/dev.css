@@ -1,50 +1,87 @@
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+  text-align: center;
+  background-color: #eef2f3;
   margin: 0;
   padding: 0;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.stamp-board {
+h1 {
+  margin: 20px 0 10px;
+  color: #333;
+}
+
+.card-container {
   position: relative;
-  width: 100%;
+  display: inline-block;
+  width: 90vw;
   max-width: 600px;
-  margin: 20px auto;
-  height: auto;
+  aspect-ratio: 3 / 4; /* 背景比率固定 */
+  margin: 10px auto;
+  overflow: hidden;
+  border: 2px dashed #aaa;
+  background-color: #fff;
+}
+
+.background-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .background {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
-  object-position: center top;
-  position: relative;
-  z-index: 0;
-  pointer-events: none;
-  display: block;
 }
 
+/* スタンプ共通設定 */
 .stamp {
   position: absolute;
-  cursor: grab;
-  z-index: 1;
+  width: 18%; /* 背景に対する比率 */
+  cursor: move;
+  opacity: 0.9;
+  transition: transform 0.2s ease;
 }
 
-.stamp img {
-  width: 120px;
-  height: auto;
-  user-select: none;
+.stamp:hover {
+  transform: scale(1.1);
 }
 
+/* ボタン類 */
 .controls {
   margin: 20px;
-  width: 90%;
+}
+
+.controls button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background-color: #005fa3;
+}
+
+/* 出力エリア */
+#output {
+  font-family: monospace;
+  white-space: pre;
+  margin-top: 10px;
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: inline-block;
+  text-align: left;
+  width: 80%;
   max-width: 600px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 2;
+  border-radius: 8px;
 }

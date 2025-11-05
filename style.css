@@ -1,23 +1,23 @@
 body {
   font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+  background: #f0f0f0;
   text-align: center;
-  background: #f3f3f3;
   margin: 0;
-  padding: 1em;
+  padding: 2em;
 }
 
-.card-container {
+#card-container {
   position: relative;
   display: inline-block;
   width: 90%;
   max-width: 500px;
-  border: 2px solid #aaa;
-  border-radius: 12px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
   overflow: hidden;
   background: white;
 }
 
-.background {
+#card-bg {
   width: 100%;
   height: auto;
   display: block;
@@ -26,28 +26,12 @@ body {
 .stamp {
   position: absolute;
   transform: translate(-50%, -50%);
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.2s ease;
-}
-
-#complete-message {
-  font-size: 1.2em;
-  color: #d35400;
-  font-weight: bold;
-  margin-top: 1em;
-}
-
-#reset-button {
-  margin-top: 1em;
-  padding: 0.5em 1.2em;
-  font-size: 1em;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 8px;
   cursor: pointer;
+  opacity: 0.1;
+  transition: opacity 0.3s, transform 0.2s;
 }
 
-#reset-button:hover {
-  background-color: #45a049;
+.stamp.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.05);
 }

@@ -1,101 +1,57 @@
 body {
   font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
   text-align: center;
-  background-color: #eef2f3;
+  background: #f3f3f3;
   margin: 0;
-  padding: 0;
+  padding: 1em;
 }
 
-h1 {
-  margin: 20px 0 10px;
-  color: #333;
-}
-
-.card-container {
+#card-container {
   position: relative;
   display: inline-block;
-  width: 90vw;
-  max-width: 600px;
-  aspect-ratio: 3 / 4;
-  margin: 10px auto;
+  width: 90%;
+  max-width: 500px;
+  border: 2px solid #aaa;
+  border-radius: 12px;
   overflow: hidden;
-  border: 2px dashed #aaa;
-  background-color: #fff;
+  background: white;
 }
 
-.background-wrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.background {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* スタンプ共通設定 */
-.stamp-wrapper {
-  position: absolute;
-  width: 18%; /* 初期サイズ */
-  cursor: move;
-  border: 1px dashed rgba(0,0,0,0.3);
-}
-
-.stamp-wrapper img {
+#card-bg {
   width: 100%;
   height: auto;
   display: block;
-  pointer-events: none;
 }
 
-/* サイズ調整用のリサイズハンドル */
-.resize-handle {
+.stamp {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 16px;
-  height: 16px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 3px;
-  cursor: se-resize;
+  width: 15%;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
-/* ボタン類 */
+.stamp.selected {
+  outline: 3px solid #1e90ff;
+  outline-offset: 2px;
+}
+
+.stamp:active {
+  cursor: grabbing;
+}
+
 .controls {
-  margin: 20px;
+  margin-top: 1em;
 }
 
-.controls button {
-  margin: 5px;
-  padding: 10px 15px;
-  font-size: 1rem;
-  background-color: #0078d7;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.controls button:hover {
-  background-color: #005fa3;
-}
-
-/* 出力エリア */
 #output {
-  font-family: monospace;
-  white-space: pre;
-  margin-top: 10px;
-  background-color: #fafafa;
-  border: 1px solid #ccc;
-  padding: 10px;
-  display: inline-block;
   text-align: left;
-  width: 80%;
-  max-width: 600px;
+  background: #fff;
+  border: 1px solid #ddd;
   border-radius: 8px;
+  padding: 1em;
+  max-width: 500px;
+  margin: 1em auto;
+  font-size: 0.85em;
+  overflow-x: auto;
 }

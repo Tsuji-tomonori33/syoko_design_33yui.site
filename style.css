@@ -1,68 +1,71 @@
 body {
+  font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+  text-align: center;
+  background-color: #f2f2f2;
   margin: 0;
   padding: 0;
-  text-align: center;
-  background: #fff;
-  font-family: "Hiragino Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
-.index-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
+/* === スタンプカード全体 === */
 .card-container {
   position: relative;
-  width: 100%;
-  max-width: 480px;
-  aspect-ratio: 3 / 4.5;
-  margin: 0 auto;
+  display: inline-block;
+  width: 90vw;               /* 画面幅の90%を基準に */
+  max-width: 600px;          /* PCでの上限 */
+  aspect-ratio: 3 / 4;       /* 背景画像の縦横比固定（例：3:4） */
+  margin: 20px auto;
   overflow: hidden;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+/* === 背景画像 === */
+.background-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .background {
   width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
+  height: 100%;
+  object-fit: contain;        /* 縦横比を保持して表示 */
 }
 
+/* === スタンプ画像 === */
 .stamp {
   position: absolute;
-  width: 18%;
-  transform: translate(-50%, -50%);
-  display: none;
-  transition: transform 0.2s, opacity 0.3s ease;
+  width: 18%;                 /* 背景画像に対する相対サイズ */
+  opacity: 0;                 /* 最初は非表示 */
+  transition: opacity 0.5s ease;
 }
 
-.stamp:active {
-  transform: translate(-50%, -50%) scale(0.95);
+/* 表示時 */
+.stamp.visible {
+  opacity: 1;
 }
 
+/* === コンプリートメッセージ === */
 #complete-message {
+  font-size: 1.2rem;
   font-weight: bold;
-  color: green;
-  margin-top: 20px;
+  color: #008000;
+  margin-top: 15px;
 }
 
+/* === リセットボタン === */
 #reset-button {
-  margin-top: 20px;
+  margin: 20px auto;
   padding: 10px 20px;
   font-size: 1rem;
   border: none;
-  background: #ff6666;
+  background-color: #ff9800;
   color: white;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 #reset-button:hover {
-  background: #ff4444;
+  background-color: #e68900;
 }

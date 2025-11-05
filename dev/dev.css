@@ -1,40 +1,101 @@
 body {
   font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
   text-align: center;
-  background: #f0f8ff;
+  background-color: #eef2f3;
   margin: 0;
-  padding: 1rem;
+  padding: 0;
+}
+
+h1 {
+  margin: 20px 0 10px;
+  color: #333;
 }
 
 .card-container {
   position: relative;
   display: inline-block;
-  max-width: 95vw;
-  width: 600px;
-  aspect-ratio: 16/9; /* 背景画像の比率を保つ */
+  width: 90vw;
+  max-width: 600px;
+  aspect-ratio: 3 / 4;
+  margin: 10px auto;
+  overflow: hidden;
+  border: 2px dashed #aaa;
+  background-color: #fff;
+}
+
+.background-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .background {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  display: block;
 }
 
-.stamp {
+/* スタンプ共通設定 */
+.stamp-wrapper {
   position: absolute;
-  width: 80px; /* 初期サイズ */
-  height: auto; /* 縦横比固定 */
-  cursor: grab;
-  user-select: none;
-  transition: transform 0.1s ease;
+  width: 18%; /* 初期サイズ */
+  cursor: move;
+  border: 1px dashed rgba(0,0,0,0.3);
 }
 
-.stamp:active {
-  cursor: grabbing;
-  transform: scale(1.05);
+.stamp-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
 }
 
+/* サイズ調整用のリサイズハンドル */
+.resize-handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 16px;
+  height: 16px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 3px;
+  cursor: se-resize;
+}
+
+/* ボタン類 */
 .controls {
-  margin-top: 1rem;
+  margin: 20px;
+}
+
+.controls button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background-color: #005fa3;
+}
+
+/* 出力エリア */
+#output {
+  font-family: monospace;
+  white-space: pre;
+  margin-top: 10px;
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: inline-block;
+  text-align: left;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 8px;
 }

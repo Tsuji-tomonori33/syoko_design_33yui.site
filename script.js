@@ -1,30 +1,10 @@
 // 開発版で調整した値（比率で統一）
 const stampData = {
-  "stamp1": {
-    "left": 64.9524,
-    "top": 24.3966,
-    "width": 30.2566
-  },
-  "stamp2": {
-    "left": 14.4971,
-    "top": 20.7041,
-    "width": 30.4636
-  },
-  "stamp3": {
-    "left": 28.4652,
-    "top": 42.8794,
-    "width": 30.1027
-  },
-  "stamp4": {
-    "left": 65.5267,
-    "top": 54.0957,
-    "width": 29.9371
-  },
-  "stamp5": {
-    "left": 16.6093,
-    "top": 75.8046,
-    "width": 30.4377
-  }
+  stamp1: { left: 11.5, top: 19.95, size: 15 },
+  stamp2: { left: 64.67, top: 23.84, size: 15 },
+  stamp3: { left: 26.0, top: 42.31, size: 15 },
+  stamp4: { left: 65.17, top: 53.28, size: 15 },
+  stamp5: { left: 13.83, top: 75.19, size: 15 },
 };
 
 // スタンプ生成処理

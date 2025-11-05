@@ -1,19 +1,21 @@
 body {
   font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+  background: #f5f5f5;
   text-align: center;
-  background: #f3f3f3;
   margin: 0;
   padding: 1em;
 }
 
-#card-container {
+h1 {
+  margin-bottom: 1em;
+}
+
+.card-container {
   position: relative;
   display: inline-block;
-  width: 90%;
-  max-width: 500px;
-  border: 2px solid #aaa;
-  border-radius: 12px;
   overflow: hidden;
+  border: 2px solid #ccc;
+  border-radius: 12px;
   background: white;
 }
 
@@ -23,21 +25,11 @@ body {
   display: block;
 }
 
-.stamp {
+#stamps img {
   position: absolute;
-  width: 15%;
+  cursor: move;
+  user-select: none;
   transform: translate(-50%, -50%);
-  cursor: grab;
-  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-
-.stamp.selected {
-  outline: 3px solid #1e90ff;
-  outline-offset: 2px;
-}
-
-.stamp:active {
-  cursor: grabbing;
 }
 
 .controls {
@@ -45,13 +37,9 @@ body {
 }
 
 #output {
-  text-align: left;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1em;
-  max-width: 500px;
-  margin: 1em auto;
-  font-size: 0.85em;
-  overflow-x: auto;
+  width: 90%;
+  height: 150px;
+  margin-top: 1em;
+  font-family: monospace;
+  white-space: pre;
 }

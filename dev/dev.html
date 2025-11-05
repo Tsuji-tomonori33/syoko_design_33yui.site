@@ -3,30 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>獅子島スタンプラリー 開発版</title>
+  <title>獅子島スタンプラリー 開発版（ドラッグでサイズ変更）</title>
   <link rel="stylesheet" href="dev.css">
 </head>
 <body>
-  <h1>🔧 スタンプ位置・サイズ調整ツール（開発版）</h1>
+  <h1>🔧 スタンプ位置・サイズ開発ツール</h1>
 
   <div id="card-container">
-    <img id="card-bg" src="../images/backgrounds/card_background.png" alt="スタンプカード">
+    <img id="card-bg" src="../images/backgrounds/card_background.png" alt="カード背景">
     <div id="stamps"></div>
   </div>
 
   <div class="controls">
-    <div>
-      <label>📏 ズーム：
-        <input type="range" id="zoom-slider" min="50" max="150" value="100">
-      </label>
-    </div>
-
-    <div>
-      <label>🔍 選択中スタンプの大きさ：
-        <input type="range" id="size-slider" min="5" max="30" value="15">
-      </label>
-    </div>
-
+    <label>📏 ズーム：
+      <input type="range" id="zoom-slider" min="50" max="150" value="100">
+    </label>
     <button id="export">📋 座標をコピー</button>
   </div>
 

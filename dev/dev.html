@@ -3,32 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[開発版] 獅子島スタンプラリー配置ツール（位置＋サイズ調整）</title>
+  <title>獅子島スタンプラリー 開発版</title>
   <link rel="stylesheet" href="dev.css">
 </head>
-<body class="dev-page">
+<body>
+  <h1>🔧 スタンプ位置・サイズ調整ツール（開発版）</h1>
 
-  <h1>🧭 スタンプ位置・サイズ調整ツール（開発版）</h1>
-
-  <div class="card-container">
-    <div class="background-wrapper">
-      <img src="images/backgrounds/card_background.png" alt="カード背景" class="background">
-    </div>
-
-    <!-- スタンプ（完全版と同じパス） -->
-    <div class="stamp-wrapper" id="stamp1"><img src="images/stamps/stamp1.png" alt="stamp1"></div>
-    <div class="stamp-wrapper" id="stamp2"><img src="images/stamps/stamp2.png" alt="stamp2"></div>
-    <div class="stamp-wrapper" id="stamp3"><img src="images/stamps/stamp3.png" alt="stamp3"></div>
-    <div class="stamp-wrapper" id="stamp4"><img src="images/stamps/stamp4.png" alt="stamp4"></div>
-    <div class="stamp-wrapper" id="stamp5"><img src="images/stamps/stamp5.png" alt="stamp5"></div>
+  <div id="card-container">
+    <img id="card-bg" src="../images/backgrounds/card_background.png" alt="スタンプカード">
+    <div id="stamps"></div>
   </div>
 
   <div class="controls">
-    <button id="reset">🔄 位置リセット</button>
-    <button id="log">📋 座標を出力</button>
+    <div>
+      <label>📏 ズーム：
+        <input type="range" id="zoom-slider" min="50" max="150" value="100">
+      </label>
+    </div>
+
+    <div>
+      <label>🔍 選択中スタンプの大きさ：
+        <input type="range" id="size-slider" min="5" max="30" value="15">
+      </label>
+    </div>
+
+    <button id="export">📋 座標をコピー</button>
   </div>
 
-  <div id="output"></div>
+  <pre id="output"></pre>
 
   <script src="dev.js"></script>
 </body>

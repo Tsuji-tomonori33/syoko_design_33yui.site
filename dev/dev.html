@@ -3,26 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>獅子島スタンプラリー 開発版（ドラッグでサイズ変更）</title>
-  <link rel="stylesheet" href="dev.css">
+  <title>獅子島スタンプラリー（開発版）</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <h1>🔧 スタンプ位置・サイズ開発ツール</h1>
+<body class="index-page">
 
-  <div id="card-container">
-    <img id="card-bg" src="../images/backgrounds/card_background.png" alt="カード背景">
-    <div id="stamps"></div>
+  <div class="card-container">
+    <img src="images/backgrounds/card_background.png" alt="スタンプカード" class="background">
+
+    <!-- スタンプ -->
+    <img id="stamp1" class="stamp draggable" src="images/stamps/stamp1.png" alt="スタンプ1">
+    <img id="stamp2" class="stamp draggable" src="images/stamps/stamp2.png" alt="スタンプ2">
+    <img id="stamp3" class="stamp draggable" src="images/stamps/stamp3.png" alt="スタンプ3">
+    <img id="stamp4" class="stamp draggable" src="images/stamps/stamp4.png" alt="スタンプ4">
+    <img id="stamp5" class="stamp draggable" src="images/stamps/stamp5.png" alt="スタンプ5">
   </div>
 
   <div class="controls">
-    <label>📏 ズーム：
-      <input type="range" id="zoom-slider" min="50" max="150" value="100">
-    </label>
-    <button id="export">📋 座標をコピー</button>
+    <button id="reset-button">🔄 位置をリセット</button>
+    <p>💡 スタンプをドラッグで動かせます（縦横比固定）</p>
   </div>
 
-  <pre id="output"></pre>
-
-  <script src="dev.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

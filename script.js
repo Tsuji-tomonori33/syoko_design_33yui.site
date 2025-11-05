@@ -1,10 +1,30 @@
 // スタンプの位置（％指定）→背景に対して相対配置
 const stampPositions = {
-  stamp1: { left: 11.5, top: 19.95 },
-  stamp2: { left: 64.67, top: 23.84 },
-  stamp3: { left: 26, top: 42.31 },
-  stamp4: { left: 65.17, top: 53.28 },
-  stamp5: { left: 13.83, top: 75.19 }
+  "stamp1": {
+    "left": 14.5864,
+    "top": 20.4145,
+    "width": 30.6084
+  },
+  "stamp2": {
+    "left": 64.8088,
+    "top": 24.3451,
+    "width": 30.6291
+  },
+  "stamp3": {
+    "left": 28.5725,
+    "top": 42.9095,
+    "width": 30.2553
+  },
+  "stamp4": {
+    "left": 65.3999,
+    "top": 54.1336,
+    "width": 30.298
+  },
+  "stamp5": {
+    "left": 16.7736,
+    "top": 75.9299,
+    "width": 30.1325
+}
 };
 
 window.addEventListener("DOMContentLoaded", () => {

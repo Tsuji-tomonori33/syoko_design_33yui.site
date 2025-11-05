@@ -2,31 +2,34 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>開発版スタンプ配置（改良版）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[開発版] 獅子島スタンプラリー配置ツール</title>
   <link rel="stylesheet" href="dev.css">
 </head>
-<body>
+<body class="dev-page">
 
-<div class="stamp-board">
-  <img src="images/backgrounds/card_background.png" class="background" alt="カード背景">
+  <h1>🧭 スタンプ位置調整ツール（開発版）</h1>
 
-  <div class="stamp" id="stamp1"><img src="images/stamps/stamp1.png" alt="スタンプ1"></div>
-  <div class="stamp" id="stamp2"><img src="images/stamps/stamp2.png" alt="スタンプ2"></div>
-  <div class="stamp" id="stamp3"><img src="images/stamps/stamp3.png" alt="スタンプ3"></div>
-  <div class="stamp" id="stamp4"><img src="images/stamps/stamp4.png" alt="スタンプ4"></div>
-  <div class="stamp" id="stamp5"><img src="images/stamps/stamp5.png" alt="スタンプ5"></div>
-</div>
+  <div class="card-container">
+    <div class="background-wrapper">
+      <img src="images/backgrounds/card_background.png" alt="カード背景" class="background">
+    </div>
 
-<div class="controls">
-  <label>スタンプサイズ:
-    <input type="range" id="size-all" min="50" max="250" value="120"> px
-  </label>
-  <button id="download-json">JSONダウンロード</button>
-</div>
+    <!-- 位置調整するスタンプ -->
+    <img id="stamp1" class="stamp" src="stamps/stamp1.png" alt="stamp1">
+    <img id="stamp2" class="stamp" src="stamps/stamp2.png" alt="stamp2">
+    <img id="stamp3" class="stamp" src="stamps/stamp3.png" alt="stamp3">
+    <img id="stamp4" class="stamp" src="stamps/stamp4.png" alt="stamp4">
+    <img id="stamp5" class="stamp" src="stamps/stamp5.png" alt="stamp5">
+  </div>
 
-<pre id="json-output"></pre>
+  <div class="controls">
+    <button id="reset">🔄 位置リセット</button>
+    <button id="log">📋 座標を出力</button>
+  </div>
 
-<script src="dev.js"></script>
+  <div id="output"></div>
+
+  <script src="dev.js"></script>
 </body>
 </html>

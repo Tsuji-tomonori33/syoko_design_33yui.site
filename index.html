@@ -9,16 +9,25 @@
 <body class="index-page">
 
   <div class="card-container">
-    <img src="images/backgrounds/card_background.png" alt="スタンプカード" class="background">
+    <!-- 背景画像（縦横比固定で中央配置） -->
+    <div class="background-wrapper">
+      <img src="images/backgrounds/card_background.png" alt="スタンプカード" class="background">
+    </div>
 
-    <!-- スタンプは script.js で押印時に生成 -->
-    <div id="stamps"></div>
+    <!-- スタンプ（初期は非表示、取得時に表示） -->
+    <img id="stamp1" class="stamp" src="images/stamps/stamp1.png" alt="スタンプ1">
+    <img id="stamp2" class="stamp" src="images/stamps/stamp2.png" alt="スタンプ2">
+    <img id="stamp3" class="stamp" src="images/stamps/stamp3.png" alt="スタンプ3">
+    <img id="stamp4" class="stamp" src="images/stamps/stamp4.png" alt="スタンプ4">
+    <img id="stamp5" class="stamp" src="images/stamps/stamp5.png" alt="スタンプ5">
   </div>
 
+  <!-- コンプリートメッセージ -->
   <p id="complete-message" style="display:none;">
     🎉 全スタンプコンプリート！おめでとうございます！ 🎉
   </p>
 
+  <!-- リセットボタン -->
   <button id="reset-button">🔄 スタンプをリセット</button>
 
   <script src="script.js"></script>

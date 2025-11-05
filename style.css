@@ -1,55 +1,68 @@
 body {
-  font-family: "Noto Sans JP", sans-serif;
   margin: 0;
   padding: 0;
   text-align: center;
-  background-color: #fff;
+  background: #fff;
+  font-family: "Hiragino Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
-.index-page, .spot-page {
+.index-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
+  justify-content: center;
 }
 
-.stamp-board {
+.card-container {
   position: relative;
   width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
+  max-width: 480px;
+  aspect-ratio: 3 / 4.5;
+  margin: 0 auto;
+  overflow: hidden;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .background {
   width: 100%;
   height: auto;
   object-fit: contain;
-  object-position: center top;
-  pointer-events: none;
-  z-index: 0;
   display: block;
 }
 
 .stamp {
   position: absolute;
-  z-index: 1;
-  display: none; /* 初期非表示 */
+  width: 18%;
+  transform: translate(-50%, -50%);
+  display: none;
+  transition: transform 0.2s, opacity 0.3s ease;
 }
 
-.stamp img {
-  width: 150px; /* 大きめに表示 */
-  height: auto;
-  user-select: none;
+.stamp:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+#complete-message {
+  font-weight: bold;
+  color: green;
+  margin-top: 20px;
 }
 
 #reset-button {
-  margin: 15px;
-  padding: 8px 16px;
-  font-size: 16px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  background: #ff6666;
+  color: white;
+  border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-.spot-bg img {
-  max-width: 90%;
-  border-radius: 10px;
+#reset-button:hover {
+  background: #ff4444;
 }

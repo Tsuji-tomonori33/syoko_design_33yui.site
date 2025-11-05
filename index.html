@@ -2,24 +2,29 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>獅子島スタンプラリー</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>獅子島スタンプラリー</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="index-page">
 
-<div class="stamp-board">
-  <img src="images/backgrounds/card_background.png" class="background" alt="スタンプカード背景">
+  <div class="card-container">
+    <img src="images/backgrounds/card_background.png" alt="スタンプカード" class="background">
 
-  <div class="stamp" id="stamp1"><img src="images/stamps/stamp1.png" alt="スタンプ1"></div>
-  <div class="stamp" id="stamp2"><img src="images/stamps/stamp2.png" alt="スタンプ2"></div>
-  <div class="stamp" id="stamp3"><img src="images/stamps/stamp3.png" alt="スタンプ3"></div>
-  <div class="stamp" id="stamp4"><img src="images/stamps/stamp4.png" alt="スタンプ4"></div>
-  <div class="stamp" id="stamp5"><img src="images/stamps/stamp5.png" alt="スタンプ5"></div>
-</div>
+    <!-- スタンプ -->
+    <img id="stamp1" class="stamp" src="images/stamps/stamp1.png" alt="スタンプ1">
+    <img id="stamp2" class="stamp" src="images/stamps/stamp2.png" alt="スタンプ2">
+    <img id="stamp3" class="stamp" src="images/stamps/stamp3.png" alt="スタンプ3">
+    <img id="stamp4" class="stamp" src="images/stamps/stamp4.png" alt="スタンプ4">
+    <img id="stamp5" class="stamp" src="images/stamps/stamp5.png" alt="スタンプ5">
+  </div>
 
-<button id="reset-button">🔄 スタンプリセット</button>
+  <p id="complete-message" style="display:none;">
+    🎉 全スタンプコンプリート！おめでとうございます！ 🎉
+  </p>
 
-<script src="script.js"></script>
+  <button id="reset-button">🔄 スタンプをリセット</button>
+
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,44 +1,51 @@
-// 開発版で取得した座標データを反映
-const stampData = {
-  stamp1: { left: 11.5, top: 19.95, size: 15 },
-  stamp2: { left: 64.67, top: 23.84, size: 15 },
-  stamp3: { left: 26.0, top: 42.31, size: 15 },
-  stamp4: { left: 65.17, top: 53.28, size: 15 },
-  stamp5: { left: 13.83, top: 75.19, size: 15 },
+// スタンプの位置（％指定）→背景に対して相対配置
+const stampPositions = {
+  stamp1: { left: 11.5, top: 19.95 },
+  stamp2: { left: 64.67, top: 23.84 },
+  stamp3: { left: 26, top: 42.31 },
+  stamp4: { left: 65.17, top: 53.28 },
+  stamp5: { left: 13.83, top: 75.19 }
 };
 
-const stampsContainer = document.getElementById("stamps");
+window.addEventListener("DOMContentLoaded", () => {
+  const stamps = document.querySelectorAll(".stamp");
+  const completeMsg = document.getElementById("complete-message");
+  const resetBtn = document.getElementById("reset-button");
 
-// 各スタンプを生成
-Object.keys(stampData).forEach(id => {
-  const img = document.createElement("img");
-  const isGot = localStorage.getItem(id) === "got";
-  img.src = isGot
-    ? `images/stamps/${id}_got.png`
-    : `images/stamps/${id}.png`;
-  img.id = id;
-  img.className = "stamp";
-  img.style.left = stampData[id].left + "%";
-  img.style.top = stampData[id].top + "%";
-  img.style.width = stampData[id].size + "%";
-  if (isGot) img.classList.add("visible");
+  // スタンプ位置を設定
+  Object.entries(stampPositions).forEach(([id, pos]) => {
+    const stamp = document.getElementById(id);
+    if (stamp) {
+      stamp.style.left = `${pos.left}%`;
+      stamp.style.top = `${pos.top}%`;
+    }
+  });
 
-  stampsContainer.appendChild(img);
+  // ローカルストレージをチェックしてスタンプを表示
+  stamps.forEach(stamp => {
+    const key = stamp.id;
+    if (localStorage.getItem(key) === "get") {
+      stamp.classList.add("visible");
+    }
+  });
+
+  // 全部押されたらメッセージ表示
+  checkCompletion();
+
+  // リセットボタン
+  resetBtn.addEventListener("click", () => {
+    if (confirm("本当にスタンプをリセットしますか？")) {
+      stamps.forEach(stamp => stamp.classList.remove("visible"));
+      localStorage.clear();
+      completeMsg.style.display = "none";
+    }
+  });
 });
 
-// コンプリート判定
+// スタンプが全て押されたか確認
 function checkCompletion() {
-  const allGot = Object.keys(stampData).every(
-    id => localStorage.getItem(id) === "got"
-  );
-  document.getElementById("complete-message").style.display = allGot
-    ? "block"
-    : "none";
+  const allGot = [1, 2, 3, 4, 5].every(num => localStorage.getItem(`stamp${num}`) === "get");
+  if (allGot) {
+    document.getElementById("complete-message").style.display = "block";
+  }
 }
-checkCompletion();
-
-// リセットボタン
-document.getElementById("reset-button").addEventListener("click", () => {
-  Object.keys(stampData).forEach(id => localStorage.removeItem(id));
-  location.reload();
-});

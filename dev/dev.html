@@ -3,34 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>獅子島スタンプラリー 開発版</title>
+  <title>開発版：スタンプ配置エディタ</title>
   <link rel="stylesheet" href="dev.css">
 </head>
 <body>
-  <h1>🔧 スタンプ位置・サイズ調整ツール（開発版）</h1>
+  <h1>🧭 スタンプ配置エディタ（開発版）</h1>
 
-  <div id="card-container">
-    <img id="card-bg" src="../images/backgrounds/card_background.png" alt="スタンプカード">
+  <div class="card-container">
+    <img src="../images/backgrounds/card_background.png" id="card-bg" alt="カード背景">
     <div id="stamps"></div>
   </div>
 
   <div class="controls">
-    <div>
-      <label>📏 ズーム：
-        <input type="range" id="zoom-slider" min="50" max="150" value="100">
-      </label>
-    </div>
-
-    <div>
-      <label>🔍 選択中スタンプの大きさ：
-        <input type="range" id="size-slider" min="5" max="30" value="15">
-      </label>
-    </div>
-
-    <button id="export">📋 座標をコピー</button>
+    <label>ズーム：
+      <input type="range" id="zoom-slider" min="50" max="150" value="100">
+    </label>
+    <label>スタンプサイズ：
+      <input type="range" id="size-slider" min="5" max="30" value="15">
+    </label>
+    <button id="save">💾 JSONをコピー</button>
+    <button id="reset">🔄 リセット</button>
   </div>
 
-  <pre id="output"></pre>
+  <textarea id="output" readonly></textarea>
 
   <script src="dev.js"></script>
 </body>

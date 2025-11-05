@@ -3,27 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>獅子島スタンプラリー（開発版）</title>
-  <link rel="stylesheet" href="style.css">
+  <title>[開発版] 獅子島スタンプラリー配置ツール（位置＋サイズ調整）</title>
+  <link rel="stylesheet" href="dev.css">
 </head>
-<body class="index-page">
+<body class="dev-page">
+
+  <h1>🧭 スタンプ位置・サイズ調整ツール（開発版）</h1>
 
   <div class="card-container">
-    <img src="images/backgrounds/card_background.png" alt="スタンプカード" class="background">
+    <div class="background-wrapper">
+      <img src="images/backgrounds/card_background.png" alt="カード背景" class="background">
+    </div>
 
-    <!-- スタンプ -->
-    <img id="stamp1" class="stamp draggable" src="images/stamps/stamp1.png" alt="スタンプ1">
-    <img id="stamp2" class="stamp draggable" src="images/stamps/stamp2.png" alt="スタンプ2">
-    <img id="stamp3" class="stamp draggable" src="images/stamps/stamp3.png" alt="スタンプ3">
-    <img id="stamp4" class="stamp draggable" src="images/stamps/stamp4.png" alt="スタンプ4">
-    <img id="stamp5" class="stamp draggable" src="images/stamps/stamp5.png" alt="スタンプ5">
+    <!-- スタンプ（完全版と同じパス） -->
+    <div class="stamp-wrapper" id="stamp1"><img src="images/stamps/stamp1.png" alt="stamp1"></div>
+    <div class="stamp-wrapper" id="stamp2"><img src="images/stamps/stamp2.png" alt="stamp2"></div>
+    <div class="stamp-wrapper" id="stamp3"><img src="images/stamps/stamp3.png" alt="stamp3"></div>
+    <div class="stamp-wrapper" id="stamp4"><img src="images/stamps/stamp4.png" alt="stamp4"></div>
+    <div class="stamp-wrapper" id="stamp5"><img src="images/stamps/stamp5.png" alt="stamp5"></div>
   </div>
 
   <div class="controls">
-    <button id="reset-button">🔄 位置をリセット</button>
-    <p>💡 スタンプをドラッグで動かせます（縦横比固定）</p>
+    <button id="reset">🔄 位置リセット</button>
+    <button id="log">📋 座標を出力</button>
   </div>
 
-  <script src="script.js"></script>
+  <div id="output"></div>
+
+  <script src="dev.js"></script>
 </body>
 </html>

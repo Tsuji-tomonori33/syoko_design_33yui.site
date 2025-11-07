@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>獅子島スタンプラリー</title>
+  <style>
+    /* 背景グラデーション（海と空） */
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #aee1f9 0%, #74c0e3 50%, #3ba1c3 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
+      color: #fff;
+      position: relative;
+    }
+
+    /* タイトル */
+    h1 {
+      font-family: "Pacifico", cursive;
+      font-size: 2.5em;
+      margin: 0;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      animation: fadeInDown 1.5s ease;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 島のシルエット */
+    .island {
+      position: absolute;
+      bottom: 120px;
+      width: 260px;
+      height: 120px;
+      background: #5ca36d;
+      border-radius: 50% 50% 45% 55% / 60% 60% 40% 40%;
+      box-shadow: inset -10px -10px 0 rgba(0,0,0,0.1);
+      animation: floatIsland 4s ease-in-out infinite;
+    }
+
+    @keyframes floatIsland {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+
+    /* 波アニメーション */
+    .wave {
+      position: absolute;
+      bottom: 0;
+      width: 200%;
+      height: 120px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 100% 100% 0 0;
+      animation: waveMove 6s linear infinite;
+    }
+
+    .wave:nth-child(2) {
+      opacity: 0.5;
+      animation-delay: -3s;
+    }
+
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* カモメアニメ */
+    .seagull {
+      position: absolute;
+      top: 80px;
+      left: -100px;
+      width: 50px;
+      height: 30px;
+      background: none;
+      animation: fly 12s linear infinite;
+    }
+
+    @keyframes fly {
+      0% { left: -100px; top: 80px; transform: scale(1); }
+      50% { left: 60%; top: 40px; transform: scale(1.1); }
+      100% { left: 110%; top: 100px; transform: scale(1); }
+    }
+
+    /* カモメの形（SVG風） */
+    .seagull::before, .seagull::after {
+      content: "";
+      position: absolute;
+      width: 25px;
+      height: 10px;
+      border-top: 2px solid white;
+      border-radius: 50%;
+    }
+
+    .seagull::before {
+      transform: rotate(-20deg);
+      left: 0;
+    }
+
+    .seagull::after {
+      transform: rotate(20deg);
+      right: 0;
+    }
+
+    /* カウントダウン */
+    #countdown {
+      margin-top: 20px;
+      font-size: 1.2em;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* 手動リンク */
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
+  </style>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>獅子島スタンプラリー</h1>
+  <div class="island"></div>
+  <div class="seagull"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+
+  <div id="countdown">5秒後にスタンプラリーカードへ移動します…</div>
+
+  <script>
+    let count = 5;
+    const countdownEl = document.getElementById("countdown");
+    const redirectURL = "https://tsuji-tomonori33.github.io/syoko_design_33yui.site/index.html";
+
+    const timer = setInterval(() => {
+      count--;
+      countdownEl.textContent = count + "秒後にスタンプラリーカードへ移動します…";
+      if (count <= 0) {
+        clearInterval(timer);
+        window.location.href = redirectURL;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

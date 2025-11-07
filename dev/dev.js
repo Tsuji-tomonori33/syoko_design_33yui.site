@@ -1,10 +1,10 @@
 // ===== スタンプ初期位置・サイズ（%単位） =====
 const initialPositions = {
-  stamp1: { left: 11.5, top: 19.95, width: 18 },
-  stamp2: { left: 64.67, top: 23.84, width: 18 },
-  stamp3: { left: 26, top: 42.31, width: 18 },
-  stamp4: { left: 65.17, top: 53.28, width: 18 },
-  stamp5: { left: 13.83, top: 75.19, width: 18 }
+  stamp1: { left: 13.646, top: 19.8733, width: 32.3753 },
+  stamp2: { left: 63.9823, top: 23.9953, width: 32.4115 },
+  stamp3: { left: 27.142, top: 42.135, width: 32.6159 },
+  stamp4: { left: 64.5721, top: 53.3874, width: 32.4503 },
+  stamp5: { left: 15.8889, top: 75.4373, width: 32.0752 }
 };
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -28,7 +28,7 @@ window.addEventListener("DOMContentLoaded", () => {
     stamp.appendChild(handle);
   });
 
-  // ===== ドラッグ移動 =====
+  // ===== ドラッグ移動・サイズ変更のロジック (変更なし) =====
   let activeStamp = null;
   let offsetX = 0, offsetY = 0;
   let mode = "move"; // "move" or "resize"
@@ -65,7 +65,6 @@ window.addEventListener("DOMContentLoaded", () => {
   function startMove(e, stamp) {
     mode = "move";
     activeStamp = stamp;
-    const rect = container.getBoundingClientRect();
     const sRect = stamp.getBoundingClientRect();
     offsetX = e.clientX - sRect.left;
     offsetY = e.clientY - sRect.top;
@@ -98,17 +97,20 @@ window.addEventListener("DOMContentLoaded", () => {
     if (mode === "move") {
       let left = ((event.clientX - rect.left - offsetX) / rect.width) * 100;
       let top = ((event.clientY - rect.top - offsetY) / rect.height) * 100;
-      left = Math.max(0, Math.min(90, left));
-      top = Math.max(0, Math.min(90, top));
+      
+      // 画面端に行き過ぎないようにするための制約。
+      left = Math.max(-50, Math.min(150, left));
+      top = Math.max(-50, Math.min(150, top));
       activeStamp.style.left = `${left}%`;
       activeStamp.style.top = `${top}%`;
     } else if (mode === "resize") {
       const dx = event.clientX - startX;
-      const dy = event.clientY - startY;
-      const dist = Math.max(dx, dy);
+      // const dy = event.clientY - startY; // Y方向は使わない
+      const dist = dx; 
       const deltaPercent = (dist / rect.width) * 100;
       let newWidth = startWidth / rect.width * 100 + deltaPercent;
-      newWidth = Math.max(5, Math.min(50, newWidth));
+      
+      newWidth = Math.max(5, Math.min(100, newWidth)); 
       activeStamp.style.width = `${newWidth}%`;
     }
   }
@@ -121,19 +123,25 @@ window.addEventListener("DOMContentLoaded", () => {
     document.removeEventListener("touchend", endDrag);
   }
 
-  // ===== 出力 =====
+  // ===== 出力（小数点以下4桁に固定し、完全版に貼り付けやすいように整形） =====
   logBtn.addEventListener("click", () => {
     const result = {};
     stamps.forEach(stamp => {
       const id = stamp.id;
-      const left = parseFloat(stamp.style.left);
-      const top = parseFloat(stamp.style.top);
-      const width = parseFloat(stamp.style.width);
-      result[id] = { left, top, width };
+      // 小数点以下4桁に固定
+      const left = parseFloat(stamp.style.left).toFixed(4);
+      const top = parseFloat(stamp.style.top).toFixed(4);
+      const width = parseFloat(stamp.style.width).toFixed(4);
+      
+      // 数値として格納
+      result[id] = { left: parseFloat(left), top: parseFloat(top), width: parseFloat(width) };
     });
-    const text = JSON.stringify(result, null, 2);
-    output.textContent = text;
-    console.log("📋 現在のスタンプ位置・サイズ:\n", text);
+    
+    // JSON文字列を整形して出力
+    const jsonText = JSON.stringify(result, null, 2);
+
+    output.textContent = jsonText;
+    console.log("📋 現在のスタンプ位置・サイズ:\n", jsonText);
   });
 
   // ===== リセット =====

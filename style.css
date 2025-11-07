@@ -1,20 +1,26 @@
 body {
   font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
   text-align: center;
-  background-color: #f2f2f2;
+  background-color: #f0f8ff; /* 背景を白に近い色に */
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* コンテンツを中央寄せ */
 }
 
-/* === スタンプカード全体 === */
+/* === スタンプカード全体 (index.html) === */
 .card-container {
   position: relative;
   display: inline-block;
-  width: 90vw;               /* 画面幅の90%を基準に */
-  max-width: 600px;          /* PCでの上限 */
-  aspect-ratio: 3 / 4;       /* 背景画像の縦横比固定（例：3:4） */
-  margin: 20px auto;
+  width: 95vw; /* 画面幅の95%を基準に */
+  max-width: 650px; /* PCでの上限を少し広めに */
+  aspect-ratio: 3 / 4; /* 背景画像の縦横比固定（例：3:4、これは画像に合わせる） */
+  margin: 20px auto 10px;
   overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: white; /* 余白は白 */
 }
 
 /* === 背景画像 === */
@@ -22,23 +28,22 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .background {
   width: 100%;
   height: 100%;
-  object-fit: contain;        /* 縦横比を保持して表示 */
+  object-fit: contain; /* 縦横比を保持して表示し、余白は親要素（白）で埋める */
 }
 
 /* === スタンプ画像 === */
 .stamp {
   position: absolute;
-  width: 18%;                 /* 背景画像に対する相対サイズ */
-  opacity: 0;                 /* 最初は非表示 */
+  height: auto; /* widthに応じて高さを自動調整 */
+  opacity: 0;   /* 最初は非表示 */
   transition: opacity 0.5s ease;
+  /* スタンプ画像がカード外に飛び出さないよう調整 */
+  box-sizing: border-box; 
 }
 
 /* 表示時 */
@@ -48,24 +53,116 @@ body {
 
 /* === コンプリートメッセージ === */
 #complete-message {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  color: #008000;
-  margin-top: 15px;
+  color: #d84315; /* 目立つ色に */
+  margin: 15px 0 20px;
+  padding: 10px 20px;
+  background-color: #fff9c4;
+  border-radius: 8px;
 }
 
 /* === リセットボタン === */
 #reset-button {
-  margin: 20px auto;
-  padding: 10px 20px;
-  font-size: 1rem;
+  margin-top: 10px;
+  padding: 12px 25px;
+  font-size: 1.1rem;
   border: none;
-  background-color: #ff9800;
+  background-color: #00bcd4; /* シックな水色に */
   color: white;
   border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
 }
 
 #reset-button:hover {
-  background-color: #e68900;
+  background-color: #0097a7;
+}
+
+/* === スポットページ共通スタイル (spot.html) === */
+.spot-page {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.spot-bg {
+  max-width: 500px;
+  width: 90%;
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.spot-bg img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.spot-bg h1 {
+  color: #3f51b5;
+  font-size: 1.5rem;
+}
+
+.spot-bg p {
+  color: #666;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.stamp-button {
+  margin: 20px 0;
+}
+
+#get-stamp {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px #c66900;
+  transition: all 0.1s;
+}
+
+#get-stamp:active {
+  box-shadow: 0 2px #c66900;
+  transform: translateY(2px);
+}
+
+#get-stamp:disabled {
+  background-color: #ccc;
+  color: #666;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+#message {
+  font-size: 1.2rem;
+  color: #4caf50 !important; /* 強制的に緑色に */
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.back-home a {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #3f51b5;
+  text-decoration: none;
+  border: 1px solid #3f51b5;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+}
+
+.back-home a:hover {
+  background-color: #e8eaf6;
 }

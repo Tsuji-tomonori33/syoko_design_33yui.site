@@ -1,5 +1,8 @@
-// スタンプの位置（％指定）→背景に対して相対配置
+// スタンプの位置とサイズ（％指定）
+// !!!!! 開発版 (dev/dev.html) で「📋 座標を出力」ボタンを押して出力された内容を、
+// !!!!! この 'const stampPositions = {};' の中身と入れ替えてください。
 const stampPositions = {
+  // --- 開発版で調整後、このブロック全体を上書きペーストしてください ---
   "stamp1": {
     "left": 13.646,
     "top": 19.8733,
@@ -25,6 +28,7 @@ const stampPositions = {
     "top": 75.4373,
     "width": 32.0752
   }
+  // ----------------------------------------------------------------
 };
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -32,12 +36,14 @@ window.addEventListener("DOMContentLoaded", () => {
   const completeMsg = document.getElementById("complete-message");
   const resetBtn = document.getElementById("reset-button");
 
-  // スタンプ位置を設定
+  // スタンプ位置とサイズを設定
   Object.entries(stampPositions).forEach(([id, pos]) => {
     const stamp = document.getElementById(id);
     if (stamp) {
+      // 開発版で設定した位置とサイズ（%）を反映
       stamp.style.left = `${pos.left}%`;
       stamp.style.top = `${pos.top}%`;
+      stamp.style.width = `${pos.width}%`;
     }
   });
 
@@ -54,10 +60,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // リセットボタン
   resetBtn.addEventListener("click", () => {
-    if (confirm("本当にスタンプをリセットしますか？")) {
+    // ご要望の確認画面を表示
+    if (confirm("スタンプカードをリセットしますか？\n（獲得したスタンプがすべて消えます）")) {
       stamps.forEach(stamp => stamp.classList.remove("visible"));
+      // ローカルストレージをクリア
       localStorage.clear();
       completeMsg.style.display = "none";
+      alert("スタンプカードをリセットしました！");
     }
   });
 });

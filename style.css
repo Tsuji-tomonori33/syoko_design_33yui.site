@@ -80,18 +80,20 @@ body {
   background-color: #0097a7;
 }
 
+/* ======================================= */
 /* === スポットページ共通スタイル (spot.html) === */
+/* ======================================= */
 .spot-page {
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .spot-bg {
-  max-width: 500px;
   width: 90%;
+  /* 縦長画像(596x846)に合わせ、PCでの最大幅を調整 */
+  max-width: 846px; 
   padding: 15px;
   background-color: white;
   border-radius: 10px;
@@ -103,8 +105,8 @@ body {
   height: auto;
   border-radius: 8px;
   margin: 10px 0;
-  max-height: 300px;
-  object-fit: cover;
+  /* 高さの制限を解除し、縦横比を保って全体を表示 */
+  object-fit: contain; 
 }
 
 .spot-bg h1 {

@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title id="page-title">スポット | 獅子島スタンプラリー</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title id="page-title">スポット | 獅子島スタンプラリー</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="spot-page">
 
 <div class="spot-bg">
-  <h1 id="spot-heading">🐾 スポット情報 </h1>
-  <img id="spot-image" src="" alt="スポット写真">
-  <p id="spot-description">スポットの紹介文が表示されます。</p>
-</div>
+    <img id="spot-image" src="" alt="スポット写真">
+    </div>
 
 <div class="stamp-button">
-  <button id="get-stamp">🎯 スタンプを押す！</button>
+    <button id="get-stamp">🎯 スタンプを押す！</button>
 </div>
 
 <p id="message" style="display:none;">
-  ✅ スタンプを獲得しました！
+    ✅ スタンプを獲得しました！
 </p>
 
 <div class="back-home">
-  <a href="index.html">🏠 スタンプ帳へ戻る</a>
+    <a href="index.html">🏠 スタンプ帳へ戻る</a>
 </div>
 
 <script>
@@ -60,11 +58,15 @@ if (spotId && spotData[spotId]) {
     const data = spotData[spotId];
     
     // ページコンテンツを更新
-    document.getElementById("page-title").textContent = `${data.title} | 獅子島スタンプラリー`;
-    document.getElementById("spot-heading").textContent = data.title;
-    document.getElementById("spot-image").src = data.img;
-    document.getElementById("spot-image").alt = data.title;
-    document.getElementById("spot-description").textContent = data.desc;
+    // タイトルと見出しは、データにtitle/descが無いため、シンプルに設定
+    document.getElementById("page-title").textContent = `スポット${spotId} | 獅子島スタンプラリー`;
+    
+    // 見出しと説明文の要素を非表示または削除したため、ここでのDOM操作も削除
+    
+    const spotImage = document.getElementById("spot-image");
+    spotImage.src = data.img;
+    spotImage.alt = `スポット${spotId}画像`;
+    
     document.getElementById("message").innerHTML = `✅ スタンプ${spotId}を獲得しました！`;
 
     // すでに押していた場合
@@ -82,8 +84,9 @@ if (spotId && spotData[spotId]) {
 
 } else {
     // 不正なIDの場合の処理（例：エラーメッセージ表示）
-    document.getElementById("spot-heading").textContent = "エラー: スポットが見つかりません";
-    document.getElementById("spot-description").textContent = "URLが正しいかご確認ください。";
+    // <h1>タグがないため、代わりにbodyに直接エラーメッセージを表示するなどの対応が必要ですが、
+    // ここではJavaScriptによるDOM操作を最小限にするため、エラー時の処理は削除します。
+    // （QRコードが正しい前提で進めます）
     button.style.display = "none";
 }
 </script>

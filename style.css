@@ -168,3 +168,28 @@ body {
 .back-home a:hover {
   background-color: #e8eaf6;
 }
+/* === index.html の操作ボタンコンテナ === */
+.index-controls {
+    margin-top: 15px; /* リセットボタンとの間にスペース */
+    margin-bottom: 20px;
+}
+
+/* === トップページに戻るボタン (index.html) === */
+.home-button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    text-decoration: none; /* 下線を削除 */
+    
+    border: none;
+    background-color: #7986cb; /* 少し落ち着いた青色 */
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.home-button:hover {
+    background-color: #5c6bc0;
+}
